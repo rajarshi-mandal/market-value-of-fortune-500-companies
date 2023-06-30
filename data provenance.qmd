@@ -1,0 +1,5 @@
+---
+title: "Data Provenance"
+---
+
+The data was scraped from *fortune.com* and uploaded to *kaggle.com* by Garreth Lee on June 15, 2023 in a .csv file.
