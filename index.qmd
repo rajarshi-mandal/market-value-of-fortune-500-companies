@@ -1,11 +1,25 @@
 ---
 title: "final-project"
+execute: 
+  echo: false
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Fortune 500 Company Analysis
 
 ```{r}
-1 + 1
+#| message: false
+library(tidyverse)
+library(primer.data)
+library(dplyr)
 ```
+
+```{r}
+#| message: false
+fortune <- read_csv('data/fortune_500_company_analysis.csv')
+
+```
+
+```{r}
+problems(fortune)
+```
+
