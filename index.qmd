@@ -1,25 +1,104 @@
 ---
 title: "final-project"
 execute: 
-  echo: false
+  echo: true
 ---
 
 Fortune 500 Company Analysis
 
+Reading in libraries.
 ```{r}
 #| message: false
+#| warning: false 
 library(tidyverse)
 library(primer.data)
 library(dplyr)
+library(readr)
+library(janitor)
+library(stringr)
+library(rstanarm)
 ```
-
+Loading data.
 ```{r}
 #| message: false
-fortune <- read_csv('data/fortune_500_company_analysis.csv')
-
+fortune <- read_tsv('data/fortune_500_company_analysis.tsv',
+                    col_types = cols(.default = col_character()))
 ```
-
+Cleaning column names.
 ```{r}
-problems(fortune)
+fortune <- clean_names(fortune,case=c('snake'))
+```
+Data preprocessing (chr to dbl).
+```{r}
+fortune$rank <- as.numeric(fortune$rank)
+
+fortune$revenues <- as.numeric(gsub(",","",fortune$revenues))
+
+fortune$year <- as.numeric(fortune$year)
+
+normal <- fortune[grep('%', fortune$revenue_percent_change, fixed = TRUE, invert = TRUE),]
+other <- filter(fortune,str_sub(fortune$revenue_percent_change, -1, -1)=='%')
+other$revenue_percent_change <- as.numeric(sub("%","",other$revenue_percent_change))
+fortune <- rbind(normal, other)
+fortune$revenue_percent_change <- as.numeric(gsub(",","",fortune$revenue_percent_change))
+
+fortune$profits <- as.numeric(gsub(",","",fortune$profits))
+
+normal <- fortune[grep('%', fortune$profits_percent_change, fixed = TRUE, invert = TRUE),]
+other <- filter(fortune,str_sub(fortune$profits_percent_change, -1, -1)=='%')
+other$profits_percent_change <- as.numeric(sub("%","",other$profits_percent_change))
+fortune <- rbind(normal, other)
+fortune$profits_percent_change <- as.numeric(gsub(",","",fortune$profits_percent_change))
+
+fortune$assets <- as.numeric(gsub(",","",fortune$assets))
+
+fortune$total_shareholder_equity <- as.numeric(gsub(",","",fortune$total_shareholder_equity))
+
+fortune$market_value_on_march_29_2013 <- as.numeric(gsub(",","",fortune$market_value_on_march_29_2013))
+
+fortune$profit_percent_sales <- as.numeric(gsub(",","",fortune$profit_percent_sales))
+
+fortune$profit_percent_assets <- as.numeric(gsub(",","",fortune$total_assets))
+
+fortune$profit_percent_shareholder_equity <- as.numeric(gsub(",","",fortune$total_assets))
+
+fortune$total_assets <- as.numeric(gsub(",","",fortune$total_assets))
+
+# Skipped some
+
+normal <- fortune[grep('$', fortune$revenues_m, fixed = TRUE, invert = TRUE),]
+other <- filter(fortune,str_sub(fortune$revenues_m, -1, -1)=='%')
+other$revenues_m <- as.numeric(sub("$","",other$revenues_m))
+fortune <- rbind(normal, other)
+fortune$revenues_m <- as.numeric(gsub(",","",fortune$revenues_m))
+
+normal <- fortune[grep('$', fortune$profits_m, fixed = TRUE, invert = TRUE),]
+other <- filter(fortune,str_sub(fortune$profits_m, -1, -1)=='%')
+other$profits_m <- as.numeric(sub("$","",other$profits_m))
+fortune <- rbind(normal, other)
+fortune$profits_m <- as.numeric(gsub(",","",fortune$profits_m))
+
+normal <- fortune[grep('$', fortune$assets_m, fixed = TRUE, invert = TRUE),]
+other <- filter(fortune,str_sub(fortune$assets_m, -1, -1)=='%')
+other$assets_m <- as.numeric(sub("$","",other$assets_m))
+fortune <- rbind(normal, other)
+fortune$assets_m <- as.numeric(gsub(",","",fortune$assets_m))
+
+fortune$employees <- as.numeric(gsub(",","",fortune$employees))
+```
+Selecting columns.
+```{r}
+train <- fortune |>
+  select(revenues_m,profits_m,assets_m,employees) |>
+  drop_na()
+```
+Training the model.
+```{r}
+fit_obj <- stan_glm(formula = revenues_m ~ profits_m + assets_m + employees,
+                  data = train,
+                  refresh = 0,
+                  seed = 42)
+
+fit_obj
 ```
 
