@@ -1,0 +1,20 @@
+---
+title: "model.qmd"
+execute: 
+  echo: false
+---
+
+```{r}
+#train <- fortune |>
+#  select(revenues_m,profits_m,assets_m,employees) |>
+#  drop_na()
+```
+
+```{r}
+#fit_obj <- stan_glm(formula = revenues_m ~ profits_m + assets_m + employees,
+#                  data = train,
+#                  refresh = 0,
+#                  seed = 42)
+#
+#fit_obj
+```
