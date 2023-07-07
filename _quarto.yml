@@ -7,7 +7,12 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: data provenance.qmd
+        text: Data Provenance
+      - href: data cleaning.qmd
+        text: Data Cleaning
+      - href: about me.qmd
+        text: About Me
 
 format:
   html:
