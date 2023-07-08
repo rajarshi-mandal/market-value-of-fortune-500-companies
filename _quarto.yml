@@ -9,10 +9,12 @@ website:
         text: Home
       - href: data cleaning.qmd
         text: Data Cleaning
-      - href: model.qmd
-        text: Model Training
+      - href: sector and industry.qmd
+        text: Sector and Industry
       - href: headquarters.qmd
         text: Headquarter Locations
+      - href: model.qmd
+        text: Model Training
       - href: data provenance.qmd
         text: Data Provenance
       - href: about me.qmd

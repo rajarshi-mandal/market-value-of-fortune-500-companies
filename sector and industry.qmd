@@ -1,0 +1,21 @@
+---
+title: "Sector and Industry"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(forcats)
+```
+
+```{r}
+fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE)
+```
+
+```{r}
+fortune
+```
