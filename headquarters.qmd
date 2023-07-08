@@ -1,0 +1,20 @@
+---
+title: "Headquarter Locations"
+execute: 
+  echo: true
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(dplyr)
+library(readr)
+```
+
+```{r}
+fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE)
+```
+
+```{r}
+fortune
+```

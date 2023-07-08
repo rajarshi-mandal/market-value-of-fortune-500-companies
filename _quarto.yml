@@ -11,6 +11,8 @@ website:
         text: Data Cleaning
       - href: model.qmd
         text: Model Training
+      - href: headquarters.qmd
+        text: Headquarter Locations
       - href: data provenance.qmd
         text: Data Provenance
       - href: about me.qmd

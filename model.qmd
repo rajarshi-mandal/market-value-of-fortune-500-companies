@@ -7,11 +7,8 @@ execute:
 ```{r}
 #| message: false
 library(tidyverse)
-library(primer.data)
 library(dplyr)
 library(readr)
-library(janitor)
-library(stringr)
 library(rstanarm)
 ```
 
