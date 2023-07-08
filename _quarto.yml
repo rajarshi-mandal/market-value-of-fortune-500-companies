@@ -2,15 +2,17 @@ project:
   type: website
 
 website:
-  title: "final-project"
+  title: "Final Project"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: data provenance.qmd
-        text: Data Provenance
       - href: data cleaning.qmd
         text: Data Cleaning
+      - href: model.qmd
+        text: Model Training
+      - href: data provenance.qmd
+        text: Data Provenance
       - href: about me.qmd
         text: About Me
 

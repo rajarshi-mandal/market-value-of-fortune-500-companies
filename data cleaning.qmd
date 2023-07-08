@@ -6,6 +6,7 @@ execute:
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
 library(primer.data)
 library(dplyr)
@@ -16,7 +17,7 @@ library(rstanarm)
 ```
 
 ```{r}
-fortune <- read_tsv('data/fortune_500_company_analysis.tsv',
+fortune <- read_tsv('data/Original Data.tsv',
                     col_types = cols(.default = col_character()))
 ```
 
@@ -25,126 +26,69 @@ fortune <- clean_names(fortune,case=c('snake'))
 ```
 
 ```{r}
-fortune$rank <- as.numeric(fortune$rank)
-fortune$year <- as.numeric(fortune$year)
-fortune$change_in_rank_full_1000 <- as.numeric(fortune$change_in_rank_full_1000)
-fortune$change_in_rank_500_only <- as.numeric(fortune$change_in_rank_500_only)
-fortune$measure_up_rank <- as.numeric(fortune$measure_up_rank)
+fortune$year <- as.numeric(gsub("[^0-9.-]", "", fortune$revenue_percent_change))
+fortune$revenues <- as.numeric(gsub("[^0-9.-]", "", fortune$revenues))
+fortune$profits <- as.numeric(gsub("[^0-9.-]", "", fortune$profits))
+fortune$assets <- as.numeric(gsub("[^0-9.-]", "", fortune$assets))
+fortune$revenues_m <- as.numeric(gsub("[^0-9.-]", "", fortune$revenues_m))
+fortune$profits_m <- as.numeric(gsub("[^0-9.-]", "", fortune$profits_m))
+fortune$assets_m <- as.numeric(gsub("[^0-9.-]", "", fortune$assets_m))
+fortune$total_assets <- as.numeric(gsub("[^0-9.-]", "", fortune$total_assets))
+fortune$sales <- as.numeric(gsub("[^0-9.-]", "", fortune$sales))
+fortune$employees <- as.numeric(gsub("[^0-9.-]", "", fortune$employees))
 ```
 
 ```{r}
-fortune$revenues <- as.numeric(gsub(",","",fortune$revenues))
-fortune$profits <- as.numeric(gsub(",","",fortune$profits))
-fortune$assets <- as.numeric(gsub(",","",fortune$assets))
-fortune$total_shareholder_equity <- as.numeric(gsub(",","",fortune$total_shareholder_equity))
-fortune$profit_percent_sales <- as.numeric(gsub(",","",fortune$profit_percent_sales))
-fortune$profit_percent_assets <- as.numeric(gsub(",","",fortune$total_assets))
-fortune$profit_percent_shareholder_equity <- as.numeric(gsub(",","",fortune$total_assets))
-fortune$total_assets <- as.numeric(gsub(",","",fortune$total_assets))
-fortune$sales <- as.numeric(gsub(",","",fortune$sales))
-fortune$stockholders_equity <- as.numeric(gsub(",","",fortune$stockholders_equity))
-fortune$profit_as_a_percent_of_sales <- as.numeric(gsub(",","",fortune$profit_as_a_percent_of_sales))
-fortune$profit_as_a_percent_of_assets <- as.numeric(gsub(",","",fortune$profit_as_a_percent_of_assets))
-fortune$profit_as_a_percent_of_shareholder_equity <- as.numeric(gsub(",","",fortune$profit_as_a_percent_of_shareholder_equity))
-fortune$employees <- as.numeric(gsub(",","",fortune$employees))
+fortune$market_value_on_march_29_2013 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_on_march_29_2013))
+fortune$market_value_on_march_31_2014 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_on_march_31_2014))
+fortune$market_value_as_of_march_31_2015 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2015))
+fortune$market_value_as_of_march_31_2016_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2016_m))
+fortune$market_value_as_of_march_31_2017_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2017_m))
+fortune$market_value_as_of_march_29_2018_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_29_2018_m))
+fortune$market_value_as_of_march_29_2019_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_29_2019_m))
+fortune$market_value_as_of_march_31_2020_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2020_m))
+fortune$market_value_as_of_march_31_2021_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2021_m))
+fortune$market_value_as_of_march_31_2022_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2022_m))
+fortune$market_value_as_of_march_31_2023_m <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2023_m))
 ```
 
 ```{r}
-fortune$market_value_on_march_29_2013 <- as.numeric(gsub(",","",fortune$market_value_on_march_29_2013))
-fortune$market_value_on_march_31_2014 <- as.numeric(gsub(",","",fortune$market_value_on_march_31_2014))
-fortune$market_value_as_of_march_31_2015 <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2015))
+fortune$profit_percent_sales <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_sales))
+fortune$profit_percent_assets <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_assets))
+fortune$profit_percent_shareholder_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_shareholder_equity))
+fortune$profit_as_a_percent_of_sales <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_as_a_percent_of_sales))
+fortune$profit_as_a_percent_of_assets <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_as_a_percent_of_assets))
+fortune$profit_as_a_percent_of_shareholder_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_as_a_percent_of_shareholder_equity))
 ```
 
 ```{r}
-normal <- fortune[grep('%', fortune$revenue_percent_change, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$revenue_percent_change, -1, -1)=='%')
-other$revenue_percent_change <- as.numeric(sub("%","",other$revenue_percent_change))
-fortune <- rbind(normal, other)
-fortune$revenue_percent_change <- as.numeric(gsub(",","",fortune$revenue_percent_change))
-
-normal <- fortune[grep('%', fortune$profits_percent_change, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$profits_percent_change, -1, -1)=='%')
-other$profits_percent_change <- as.numeric(sub("%","",other$profits_percent_change))
-fortune <- rbind(normal, other)
-fortune$profits_percent_change <- as.numeric(gsub(",","",fortune$profits_percent_change))
+fortune$rank <- as.numeric(gsub("[^0-9.-]", "", fortune$rank))
+fortune$change_in_rank_full_1000 <- as.numeric(gsub("[^0-9.-]", "", fortune$change_in_rank_full_1000))
+fortune$change_in_rank_500_only <- as.numeric(gsub("[^0-9.-]", "", fortune$change_in_rank_500_only))
+fortune$measure_up_rank <- as.numeric(gsub("[^0-9.-]", "", fortune$measure_up_rank))
 ```
 
 ```{r}
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2016_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2016_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2016_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2016_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2016_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2016_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2017_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2017_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2017_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2017_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2017_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2017_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_29_2018_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_29_2018_m, 1, 1)=='$')
-other$market_value_as_of_march_29_2018_m <- as.numeric(sub("$","",other$market_value_as_of_march_29_2018_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_29_2018_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_29_2018_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_29_2019_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_29_2019_m, 1, 1)=='$')
-other$market_value_as_of_march_29_2019_m <- as.numeric(sub("$","",other$market_value_as_of_march_29_2019_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_29_2019_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_29_2019_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2020_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2020_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2020_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2020_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2020_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2020_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2021_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2021_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2021_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2021_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2021_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2021_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2022_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2022_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2022_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2022_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2022_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2022_m))
-
-normal <- fortune[grep('$', fortune$market_value_as_of_march_31_2023_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$market_value_as_of_march_31_2023_m, 1, 1)=='$')
-other$market_value_as_of_march_31_2023_m <- as.numeric(sub("$","",other$market_value_as_of_march_31_2023_m))
-fortune <- rbind(normal, other)
-fortune$market_value_as_of_march_31_2023_m <- as.numeric(gsub(",","",fortune$market_value_as_of_march_31_2023_m))
+fortune$revenue_percent_change <- as.numeric(gsub("[^0-9.-]", "", fortune$revenue_percent_change))
+fortune$profits_percent_change <- as.numeric(gsub("[^0-9.-]", "", fortune$profits_percent_change))
+fortune$total_shareholder_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$total_shareholder_equity))
+fortune$stockholders_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$stockholders_equity))
 ```
 
 ```{r}
-normal <- fortune[grep('$', fortune$revenues_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$revenues_m, -1, -1)=='$')
-other$revenues_m <- as.numeric(sub("$","",other$revenues_m))
-fortune <- rbind(normal, other)
-fortune$revenues_m <- as.numeric(gsub(",","",fortune$revenues_m))
-
-normal <- fortune[grep('$', fortune$profits_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$profits_m, -1, -1)=='$')
-other$profits_m <- as.numeric(sub("$","",other$profits_m))
-fortune <- rbind(normal, other)
-fortune$profits_m <- as.numeric(gsub(",","",fortune$profits_m))
-
-normal <- fortune[grep('$', fortune$assets_m, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$assets_m, -1, -1)=='$')
-other$assets_m <- as.numeric(sub("$","",other$assets_m))
-fortune <- rbind(normal, other)
-fortune$assets_m <- as.numeric(gsub(",","",fortune$assets_m))
-
-normal <- fortune[grep('$', fortune$measure_up, fixed = TRUE, invert = TRUE),]
-other <- filter(fortune,str_sub(fortune$measure_up, -1, -1)=='$')
-other$measure_up <- as.numeric(sub("$","",other$measure_up))
-fortune <- rbind(normal, other)
-fortune$measure_up <- as.numeric(gsub(",","",fortune$measure_up))
+colnames(fortune)[colnames(fortune) == "market_value_on_march_29_2013"] = "market_value_2013"
+colnames(fortune)[colnames(fortune) == "market_value_on_march_31_2014"] = "market_value_2014"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2015"] = "market_value_2015"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2016_m"] = "market_value_2016"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2017_m"] = "market_value_2017"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2018_m"] = "market_value_2018"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2019_m"] = "market_value_2019"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2020_m"] = "market_value_2020"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2021_m"] = "market_value_2021"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2022_m"] = "market_value_2022"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2023_m"] = "market_value_2023"
 ```
 
 ```{r}
-fortune[sample(1:nrow(fortune), 1000),]
+write.csv(fortune, "data/Cleaned Data.csv", na = "", row.names = FALSE)
 ```
