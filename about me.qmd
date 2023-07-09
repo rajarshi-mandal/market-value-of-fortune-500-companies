@@ -1,5 +1,0 @@
----
-title: "About Me"
----
-
-My name is Rajarshi Mandal. I am a student at William Diamond Middle School. This is my final project for [Kane’s Free Data Science Course](https://bootcamp.davidkane.info/). I have thoroughly enjoyed this course.

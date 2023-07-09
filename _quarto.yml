@@ -15,8 +15,8 @@ website:
         text: Model Training
       - href: sources.qmd
         text: Sources
-      - href: about me.qmd
-        text: About Me
+      - href: about.qmd
+        text: About
 
 format:
   html:

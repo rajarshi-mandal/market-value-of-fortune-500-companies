@@ -1,0 +1,5 @@
+---
+title: "About"
+---
+
+My name is Rajarshi Mandal, and I am a student at William Diamond Middle School. The code can be found at [my Github account](https://github.com/rajarshi-mandal). This is my final project for [Kane’s Free Data Science Course](https://bootcamp.davidkane.info/). The course is great for anybody that wants to learn about Data Science!
