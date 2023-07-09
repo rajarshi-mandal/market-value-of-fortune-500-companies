@@ -13,8 +13,8 @@ website:
         text: Headquarter Locations
       - href: model.qmd
         text: Model Training
-      - href: data provenance.qmd
-        text: Data Provenance
+      - href: sources.qmd
+        text: Sources
       - href: about me.qmd
         text: About Me
 
