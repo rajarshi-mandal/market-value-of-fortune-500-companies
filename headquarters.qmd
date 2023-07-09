@@ -22,7 +22,6 @@ state_hq <- unique(fortune) |>
   select(headquarters_state) |>
   drop_na() |>
   count(headquarters_state) |>
-  filter(n > 0) |>
   mutate(headquarters_state = fct_reorder(headquarters_state, desc(n)))
 ```
 
@@ -55,9 +54,4 @@ city_hq |>
        subtitle = "New York City, Houston, Chicago, Atlanta, and Dallas are the most common cities.",
        x = 'Headquarter City',
        y = 'Count')
-```
-
-```{r}
-fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE)
-fortune
 ```

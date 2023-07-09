@@ -7,8 +7,6 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: data cleaning.qmd
-        text: Data Cleaning
       - href: sector and industry.qmd
         text: Sector and Industry
       - href: headquarters.qmd

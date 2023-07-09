@@ -1,7 +1,7 @@
 ---
 title: "Data Cleaning"
 execute: 
-  echo: true
+  echo: false
 ---
 
 ```{r}
@@ -85,6 +85,21 @@ colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2020_m"] = "
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2021_m"] = "market_value_2021"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2022_m"] = "market_value_2022"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2023_m"] = "market_value_2023"
+```
+
+```{r}
+fortune$sector <- gsub('Hotels, Resturants & Leisure', 'Hotels, Restaurants & Leisure', fortune$sector)
+fortune$sector <- gsub('Food and Drug Stores', 'Food & Drug Stores', fortune$sector)
+fortune$industry <- gsub('Advertising, marketing', 'Advertising, Marketing', fortune$industry)
+fortune$industry <- gsub('^Aerospace$', 'Aerospace & Defense', fortune$industry)
+fortune$industry <- gsub('Aerospace and Defense', 'Aerospace & Defense', fortune$industry)
+fortune$industry <- gsub('^Electronics, Electrical Equip\\.$', 'Electronics, Electrical Equipment', fortune$industry)
+fortune$industry <- gsub('Engineering, Construction', 'Engineering & Construction', fortune$industry)
+fortune$industry <- gsub('Food and Drug Stores', 'Food & Drug Stores', fortune$industry)
+fortune$industry <- gsub('^Insurance\\: Life, Health \\(stock\\)$', 'Insurance: Life, Health (Stock)', fortune$industry)
+fortune$industry <- gsub('Motor Vehicles and Parts', 'Motor Vehicles & Parts', fortune$industry)
+fortune$industry <- gsub('Real estate', 'Real Estate', fortune$industry)
+fortune$industry <- gsub('Scientific,Photographic and Control Equipment', 'Scientific, Photographic and Control Equipment', fortune$industry)
 ```
 
 ```{r}
