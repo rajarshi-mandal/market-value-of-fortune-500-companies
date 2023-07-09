@@ -1,26 +1,32 @@
 project:
   type: website
 
+
 website:
   title: "Final Project"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: sector and industry.qmd
-        text: Sector and Industry
-      - href: headquarters.qmd
-        text: Headquarter Locations
+      - sidebar:sources
       - href: model.qmd
         text: Model Training
       - href: about.qmd
         text: About
+
+  sidebar:
+    - id: sources
+      title: "Exploratory Data Analysis"
+      style: "floating"
+      background: "#ffffff"
+      collapse-level: 2
+      contents:
+        - sector and industry.qmd
+        - headquarters.qmd
+
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-
