@@ -22,7 +22,7 @@ business_sect <- unique(fortune) |>
   select(sector) |>
   drop_na() |>
   count(sector) |>
-  mutate(sector = fct_reorder(sector, n, .desc = TRUE))
+  mutate(sector = fct_reorder(sector, n, .desc = FALSE))
 ```
 
 ```{r}
@@ -31,27 +31,29 @@ business_ind <- unique(fortune) |>
   drop_na() |>
   count(industry) |>
   filter(n > 100) |>
-  mutate(industry = fct_reorder(industry, n, .desc = TRUE))
+  mutate(industry = fct_reorder(industry, n, .desc = FALSE))
 ```
 
 ```{r}
 business_sect |>
   ggplot(aes(x = sector, y = n)) +
   geom_bar(stat = 'identity', fill = '#0000c0') +
-  theme(axis.text.x = element_text(angle = 90)) +
+  theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Business Sectors of Fortune 500 Companies",
-       subtitle = "Financials, technology, energy, healthcare, and retailing are the most common sectors.",
+       subtitle = "Financials, energy, technology, health care, and retailing are the most\ncommon sectors.",
        x = 'Sector',
-       y = 'Count')
+       y = 'Count') +
+  coord_flip()
 ```
 
 ```{r}
 business_ind |>
   ggplot(aes(x = industry, y = n)) +
   geom_bar(stat = 'identity', fill = '#0000c0') +
-  theme(axis.text.x = element_text(angle = 90)) +
+  theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Industries of Fortune 500 Companies",
-       subtitle = "Utilities, Specialty Retailers, Commercial Banks, and Chemicals are the most common industries.",
+       subtitle = "Gas and electric utilities, specialty retailers, commercial banks,\nand chemicals are the most common industries.",
        x = 'Industry',
-       y = 'Count')
+       y = 'Count') +
+  coord_flip()
 ```
