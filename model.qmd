@@ -2,6 +2,7 @@
 title: "Model Training"
 execute: 
   echo: false
+sidebar: false
 ---
 
 ```{r}

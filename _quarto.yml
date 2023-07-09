@@ -8,22 +8,38 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - sidebar:sources
+      - sidebar:eda
       - href: model.qmd
         text: Model Training
       - href: about.qmd
         text: About
+     
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://github.com/rajarshi-mandal/fortune-500
+
 
   sidebar:
-    - id: sources
+    - id: eda
       title: "Exploratory Data Analysis"
-      style: "floating"
-      background: "#ffffff"
-      collapse-level: 0
-      contents:
+      style: "docked"
+      background: '#f8f9fa'
+      collapse-level: 2
+      contents: 
         - sector and industry.qmd
         - headquarters.qmd
+  
 
+  back-to-top-navigation: true
+  page-footer: 
+    left: "Copyright 2023, Rajarshi Mandal" 
+    right: 
+      - icon: github
+        href: https://github.com/rajarshi-mandal/fortune-500
+    background: '#f8f9fa'
+  
 
 format:
   html:

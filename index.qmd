@@ -2,6 +2,8 @@
 title: "Fortune 500"
 execute: 
   echo: false
+date: "`r Sys.Date()`"
+sidebar: false
 ---
 
 ```{r}
