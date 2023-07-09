@@ -19,7 +19,7 @@ website:
       title: "Exploratory Data Analysis"
       style: "floating"
       background: "#ffffff"
-      collapse-level: 2
+      collapse-level: 0
       contents:
         - sector and industry.qmd
         - headquarters.qmd
