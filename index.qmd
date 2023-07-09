@@ -1,7 +1,9 @@
 ---
-title: "final-project"
+title: "Final Project"
 execute: 
-  echo: true
+  echo: false
 ---
 
-Home Page.
+```{r}
+print('Hello!')
+```

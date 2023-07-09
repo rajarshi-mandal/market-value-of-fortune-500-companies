@@ -8,7 +8,6 @@ execute:
 #| message: false
 #| warning: false
 library(tidyverse)
-library(dplyr)
 library(readr)
 library(janitor)
 library(stringr)

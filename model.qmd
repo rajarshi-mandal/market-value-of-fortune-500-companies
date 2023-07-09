@@ -1,13 +1,13 @@
 ---
 title: "Model Training"
 execute: 
-  echo: true
+  echo: false
 ---
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
-library(dplyr)
 library(readr)
 library(rstanarm)
 ```
@@ -18,7 +18,7 @@ fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE)
 
 ```{r}
 train <- fortune |>
-  select(revenues_m,profits_m,assets_m,employees) |>
+  select(revenues_m, profits_m, assets_m, employees) |>
   drop_na()
 ```
 

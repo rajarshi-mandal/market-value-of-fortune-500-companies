@@ -6,15 +6,15 @@ execute:
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
-library(dplyr)
 library(readr)
 library(forcats)
 ```
 
 ```{r}
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(name,sector,industry)
+  select(name, sector, industry)
 ```
 
 ```{r}

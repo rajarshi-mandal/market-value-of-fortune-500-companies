@@ -6,8 +6,8 @@ execute:
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
-library(dplyr)
 library(readr)
 library(forcats)
 ```
