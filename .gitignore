@@ -7,3 +7,4 @@
 
 /.quarto/
 *site/
+*_publish.yml
