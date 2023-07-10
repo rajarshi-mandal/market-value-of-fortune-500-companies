@@ -15,13 +15,6 @@ library(gtsummary)
 ```
 
 ```{r}
-read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(year, gained_in_rank) |>
-  drop_na() |>
-  count(gained_in_rank, .by = year)
-```
-
-```{r}
 train <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(market_value_mil, year, revenue_mil, profit_mil, asset_mil, employees) |>
   drop_na()
@@ -35,9 +28,11 @@ fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil
 ```
 
 ```{r}
-fit_obj
+tbl_regression(x = fit_obj,
+               label = list(year ~ "Year", revenue_mil ~ "Revenue", profit_mil ~ 'Profit', asset_mil ~ 'Assets', employees ~ 'Employees'))
 ```
 
 ```{r}
-tbl_regression(fit_obj)
+# Lorem Ipsum
 ```
+
