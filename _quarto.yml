@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Final Project"
+  
   navbar:
     left:
       - href: index.qmd
@@ -13,7 +14,6 @@ website:
         text: Model Training
       - href: about.qmd
         text: About
-     
     tools:
       - icon: github
         menu:
@@ -50,7 +50,7 @@ theme:
   light: flatly
   dark: darkly
   
-
+  
 format:
   html:
     theme: cosmo
