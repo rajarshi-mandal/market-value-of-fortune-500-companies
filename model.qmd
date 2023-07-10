@@ -70,12 +70,62 @@ pe |>
                    bins = 100, 
                    position = "identity") +
   labs(title = "Posterior for Market Value",
-       subtitle = "Companies with more employees have higher market value.",
-       x = "# of Employees",
+       subtitle = "Fortune 500 Companies with more employees have higher market value.",
+       x = "Market Value ($m)",
        y = "Probability",
-       caption = 'fortune.com') + 
+       caption = 'fortune.com',
+       fill = "Number of Employees") + 
   scale_x_continuous(labels = scales::comma_format()) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_fill_discrete(name = "Number of Employees", labels = c('100,000','250,000','500,000','750,000','1,000,000'))
+  scale_fill_discrete(labels = c('100,000','250,000','500,000','750,000','1,000,000')) +
+  theme_classic()
+```
+
+```{r}
+newobs = tibble(year = 2023, 
+                revenue_mil = c(100000,200000,300000,400000,500000),
+                profit_mil = 3500,
+                asset_mil = 110000,
+                employees = 61000)
+
+pe <- posterior_epred(fit_obj, newdata = newobs) |> 
+  as_tibble() 
+```
+
+```{r}
+colnames(pe)[colnames(pe) == 1] = '100000'
+colnames(pe)[colnames(pe) == 2] = '200000'
+colnames(pe)[colnames(pe) == 3] = '300000'
+colnames(pe)[colnames(pe) == 4] = '400000'
+colnames(pe)[colnames(pe) == 5] = '500000'
+```
+
+```{r}
+pe <- pe |> 
+  pivot_longer(cols = c('100000','200000','300000','400000','500000'), 
+               names_to = "revenue_m",
+               values_to = "market_value")
+pe$revenue_m <- as.numeric(pe$revenue_m)
+pe$revenue_m <- as.factor(pe$revenue_m)
+```
+
+```{r}
+#| message: false
+#| warning: false
+pe |>
+  ggplot(aes(market_value, fill = revenue_m)) +
+  geom_histogram(aes(y = after_stat(count/sum(count))),
+                   alpha = 0.5, 
+                   bins = 100, 
+                   position = "identity") +
+  labs(title = "Posterior for Market Value",
+       subtitle = "Fortune 500 Companies with higher revenue have higher market value.",
+       x = "Market Value ($m)",
+       y = "Probability",
+       caption = 'fortune.com',
+       fill = "Revenue ($m)") + 
+  scale_x_continuous(labels = scales::comma_format()) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_fill_discrete(labels = c('100,000','200,000','300,000','400,000','500,000')) +
   theme_classic()
 ```
