@@ -14,7 +14,8 @@ library(forcats)
 
 ```{r}
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(name, sector, industry)
+  select(rank, name, sector, industry) |>
+  filter(rank <= 500)
 ```
 
 ```{r}
@@ -30,7 +31,7 @@ business_ind <- unique(fortune) |>
   select(industry) |>
   drop_na() |>
   count(industry) |>
-  filter(n > 100) |>
+  filter(n > 210) |>
   mutate(industry = fct_reorder(industry, n, .desc = FALSE))
 ```
 
@@ -40,7 +41,7 @@ business_sect |>
   geom_bar(stat = 'identity', fill = '#0000c0') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Business Sectors of Fortune 500 Companies",
-       subtitle = "Financials, energy, technology, health care, and retailing are the most\ncommon sectors.",
+       subtitle = "Financials, energy, retailing, technology, and health care are the most\ncommon sectors.",
        x = 'Sector',
        y = 'Count') +
   coord_flip()
@@ -52,7 +53,7 @@ business_ind |>
   geom_bar(stat = 'identity', fill = '#0000c0') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Industries of Fortune 500 Companies",
-       subtitle = "Gas and electric utilities, specialty retailers, commercial banks,\nand chemicals are the most common industries.",
+       subtitle = "Gas and electric ultities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
        x = 'Industry',
        y = 'Count') +
   coord_flip()
