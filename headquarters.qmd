@@ -14,8 +14,7 @@ library(forcats)
 
 ```{r}
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(rank,name,headquarters_state,headquarters_city) |>
-  filter(rank <= 500)
+  select(rank,name,headquarters_state,headquarters_city)
 ```
 
 ```{r}
