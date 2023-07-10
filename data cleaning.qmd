@@ -111,6 +111,12 @@ fortune <- subset(fortune, select = -c(assets, assets_m, total_assets, sales))
 ```
 
 ```{r}
+fortune <- fortune |>
+  mutate(newcomer_to_fortune_500 = coalesce(newcomer, newcomer_to_the_fortune_500))
+fortune <- subset(fortune, select = -c(newcomer, newcomer_to_the_fortune_500))
+```
+
+```{r}
 original <- fortune |>
   filter(year != 2014)
 updated <- fortune |>
@@ -136,9 +142,15 @@ fortune <- subset(fortune, select = -c(market_value_2013,market_value_2014,marke
 ```
 
 ```{r}
-fortune <- subset(fortune, select = -c(profit_as_a_percent_of_sales, profit_as_a_percent_of_assets, profit_as_a_percent_of_shareholder_equity, total_shareholder_equity, profit_percent_sales, profit_percent_assets, profit_percent_shareholder_equity, stockholders_equity, measure_up_rank))
+fortune <- subset(fortune, select = -c(profit_as_a_percent_of_sales, profit_as_a_percent_of_assets, profit_as_a_percent_of_shareholder_equity, total_shareholder_equity, profit_percent_sales, profit_percent_assets, profit_percent_shareholder_equity, stockholders_equity, measure_up_rank, foreign_born_ceo, measure_up))
 ```
 
 ```{r}
+fortune <- subset(fortune, select = -c(revenue_percent_change, profits_percent_change, gained_in_rank, dropped_in_rank, profitable, growth_in_jobs, best_companies, worlds_most_admired_companies, change_the_world, fastest_growing_companies, change_in_rank_full_1000, change_in_rank_500_only))
+```
+
+```{r}
+fortune <- fortune[, c('name','rank','year','industry','sector','headquarters_state','headquarters_city','market_value_mil','revenue_mil','profit_mil','asset_mil','employees','founder_is_ceo','female_ceo','newcomer_to_fortune_500','global_500')] |>
+  filter(rank <= 500)
 write.csv(fortune, "data/Cleaned Data.csv", na = "", row.names = FALSE)
 ```
