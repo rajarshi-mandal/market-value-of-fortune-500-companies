@@ -1,0 +1,62 @@
+---
+title: "Revenue and Profit"
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(forcats)
+```
+
+```{r}
+fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
+  select(rank, year, revenue_mil, profit_mil, asset_mil) |>
+  filter(rank <= 500)
+```
+
+```{r}
+revenue <- fortune |>
+  summarize(mean_revenue_mil = mean(revenue_mil, na.rm = TRUE), .by = year)
+
+revenue$mean_revenue_mil[revenue$year == 2013] <- mean(c(23529.903, 24421.006))
+```
+
+```{r}
+profit <- fortune |>
+  filter(year >= 2013) |>
+  summarize(mean_profit_mil = mean(profit_mil, na.rm = TRUE), .by = year)
+```
+
+```{r}
+asset <- fortune |>
+  filter(year >= 2013) |>
+  summarize(mean_asset_mil = mean(asset_mil, na.rm = TRUE), .by = year)
+asset
+```
+
+```{r}
+revenue |>
+  ggplot(aes(x = year, y = mean_revenue_mil)) +
+  geom_line() +
+  scale_x_continuous('Year',
+                     breaks = c(1996,1999,2002,2005,2008,2011,2014,2017,2020,2023),
+                     limits = c(1996,2023)) +
+  scale_y_continuous('Mean Revenue (million $)',
+                     breaks = c(10000,15000,20000,25000,30000,35000,40000),
+                     limits = c(9000,36500))
+```
+
+```{r}
+profit |>
+  ggplot(aes(x = year, y = mean_profit_mil)) +
+  geom_line()
+```
+
+```{r}
+asset |>
+  ggplot(aes(x = year, y = mean_asset_mil)) +
+  geom_line()
+```

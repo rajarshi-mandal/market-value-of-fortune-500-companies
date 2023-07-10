@@ -23,7 +23,7 @@ fortune <- clean_names(fortune,case=c('snake'))
 ```
 
 ```{r}
-fortune$year <- as.numeric(gsub("[^0-9.-]", "", fortune$revenue_percent_change))
+fortune$year <- as.numeric(gsub("[^0-9.-]", "", fortune$year))
 fortune$revenues <- as.numeric(gsub("[^0-9.-]", "", fortune$revenues))
 fortune$profits <- as.numeric(gsub("[^0-9.-]", "", fortune$profits))
 fortune$assets <- as.numeric(gsub("[^0-9.-]", "", fortune$assets))
@@ -99,6 +99,23 @@ fortune$industry <- gsub('^Insurance\\: Life, Health \\(stock\\)$', 'Insurance: 
 fortune$industry <- gsub('Motor Vehicles and Parts', 'Motor Vehicles & Parts', fortune$industry)
 fortune$industry <- gsub('Real estate', 'Real Estate', fortune$industry)
 fortune$industry <- gsub('Scientific,Photographic and Control Equipment', 'Scientific, Photographic and Control Equipment', fortune$industry)
+```
+
+```{r}
+original <- fortune |>
+  filter(year != 2014)
+updated <- fortune |>
+  filter(year == 2014) |>
+  mutate(revenues = revenues*100)
+fortune <- rbind(original, updated) |>
+  mutate(revenue_mil = coalesce(revenues/100, revenues_m))
+fortune <- subset(fortune, select = -c(revenues, revenues_m))
+fortune <- fortune |>
+  mutate(profit_mil = coalesce(profits, profits_m))
+fortune <- subset(fortune, select = -c(profits, profits_m))
+fortune <- fortune |>
+  mutate(asset_mil = coalesce(total_assets, assets/100, assets_m))
+fortune <- subset(fortune, select = -c(assets, assets_m, total_assets))
 ```
 
 ```{r}
