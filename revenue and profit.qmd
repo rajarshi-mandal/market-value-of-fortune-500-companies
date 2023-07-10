@@ -34,7 +34,6 @@ profit <- fortune |>
 asset <- fortune |>
   filter(year >= 2013) |>
   summarize(mean_asset_mil = mean(asset_mil, na.rm = TRUE), .by = year)
-asset
 ```
 
 ```{r}
