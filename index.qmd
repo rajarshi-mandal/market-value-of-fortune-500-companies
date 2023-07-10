@@ -6,15 +6,7 @@ date: "`r Sys.Date()`"
 sidebar: false
 ---
 
+Hello!
 ```{r}
-read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(rank, year, founder_is_ceo, foreign_born_ceo, female_ceo, employees)
-```
-
-
-```{r}
-read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  filter(rank <= 500) |>
-  select(year,employees) |>
-  summarize(mean(employees, na.rm = TRUE), .by=year)
+1 + 1
 ```
