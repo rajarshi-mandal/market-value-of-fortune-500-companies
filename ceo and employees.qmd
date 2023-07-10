@@ -15,8 +15,7 @@ library(forcats)
 
 ```{r}
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(rank, year, founder_is_ceo, foreign_born_ceo, female_ceo, employees) |>
-  filter(rank <= 500)
+  select(rank, year, founder_is_ceo, female_ceo, employees)
 ```
 
 ```{r}
