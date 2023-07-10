@@ -9,6 +9,7 @@ execute:
 #| warning: false
 library(tidyverse)
 library(readr)
+library(dplyr)
 library(janitor)
 library(stringr)
 ```
