@@ -43,7 +43,8 @@ state_hq |>
        subtitle = "New York, California, Texas, Illinois, Ohio, and Pensylvania are the most common states.",
        x = 'Headquarter State Abbreviation',
        y = 'Count',
-       caption = 'fortune.com: Fortune 500')
+       caption = 'fortune.com: Fortune 500') +
+  theme_classic()
 ```
 
 ```{r}
@@ -55,5 +56,6 @@ city_hq |>
        subtitle = "New York City, Houston, Atlanta, Chicago, and Dallas are the most common cities.",
        x = 'Headquarter City',
        y = 'Count',
-       caption = 'fortune.com: Fortune 500')
+       caption = 'fortune.com: Fortune 500') +
+  theme_classic()
 ```

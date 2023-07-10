@@ -44,7 +44,8 @@ business_sect |>
        x = 'Sector',
        y = 'Count',
        caption = 'fortune.com: Fortune 500') +
-  coord_flip()
+  coord_flip() +
+  theme_classic()
 ```
 
 ```{r}
@@ -57,5 +58,6 @@ business_ind |>
        x = 'Industry',
        y = 'Count',
        caption = 'fortune.com: Fortune 500') +
-  coord_flip()
+  coord_flip() +
+  theme_classic()
 ```
