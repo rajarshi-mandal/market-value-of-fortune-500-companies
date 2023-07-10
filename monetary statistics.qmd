@@ -57,7 +57,8 @@ market_value |>
                      limits = c(30000,80000),
                      labels = scales::dollar_format()) +
   labs(title = 'Mean Market Value of Fortune 500 Companies from 2013 to 2023',
-       subtitle = 'Market value has recently spiked.')
+       subtitle = 'Market value has recently spiked.',
+       caption = 'fortune.com: Fortune 500')
 ```
 
 ```{r}
@@ -73,7 +74,8 @@ revenue |>
                      limits = c(9000,36500),
                      labels = scales::dollar_format()) +
   labs(title = 'Mean Revenue of Fortune 500 Companies from 1996 to 2023',
-       subtitle = 'There has been steady growth over the years.')
+       subtitle = 'There has been steady growth over the years.',
+       caption = 'fortune.com: Fortune 500')
 ```
 
 ```{r}
@@ -89,7 +91,8 @@ profit |>
                      limits = c(1500,3900),
                      labels = scales::dollar_format()) +
   labs(title = 'Mean Profit of Fortune 500 Companies from 2013 to 2023',
-       subtitle = 'Profits jumped to record highs in 2022.')
+       subtitle = 'Profits jumped to record highs in 2022.',
+       caption = 'fortune.com: Fortune 500')
 ```
 
 ```{r}
@@ -105,5 +108,6 @@ asset |>
                      limits = c(70000,112500),
                      labels = scales::dollar_format()) +
   labs(title = 'Mean Assets of Fortune 500 Companies from 2013 to 2023',
-       subtitle = 'There has been steady growth over the years.')
+       subtitle = 'There has been steady growth over the years.',
+       caption = 'fortune.com: Fortune 500')
 ```

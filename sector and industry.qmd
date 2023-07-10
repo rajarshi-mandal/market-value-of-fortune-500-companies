@@ -42,7 +42,8 @@ business_sect |>
   labs(title = "Business Sectors of Fortune 500 Companies",
        subtitle = "Financials, energy, retailing, technology, and health care are the most\ncommon sectors.",
        x = 'Sector',
-       y = 'Count') +
+       y = 'Count',
+       caption = 'fortune.com: Fortune 500') +
   coord_flip()
 ```
 
@@ -54,6 +55,7 @@ business_ind |>
   labs(title = "Industries of Fortune 500 Companies",
        subtitle = "Gas and electric ultities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
        x = 'Industry',
-       y = 'Count') +
+       y = 'Count',
+       caption = 'fortune.com: Fortune 500') +
   coord_flip()
 ```

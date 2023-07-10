@@ -51,7 +51,8 @@ newcomer |>
                      limits = c(0.04,0.08),
                      labels = scales::percent_format()) +
   labs(title = '% of Fortune 500 Companies that are Newcomers to the List from 2015 to 2023',
-       subtitle = 'About 5.4% of companies are appearing on the list for the first time.')
+       subtitle = 'About 5.4% of companies are appearing on the list for the first time.',
+       caption = 'fortune.com: Fortune 500')
 ```
 
 ```{r}
@@ -67,5 +68,6 @@ global |>
                      limits = c(0.2325,0.2625),
                      labels = scales::percent_format()) +
   labs(title = '% of Fortune 500 Companies that are Global 500 Comapnies from 2016 to 2023',
-       subtitle = 'About 24.6% of fortune 500 companies are global 500 companies.')
+       subtitle = 'About 24.6% of fortune 500 companies are global 500 companies.',
+       caption = 'fortune.com: Fortune 500')
 ```
