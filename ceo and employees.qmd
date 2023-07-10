@@ -58,7 +58,7 @@ employees |>
                      labels = scales::comma_format()) +
   labs(title = 'Mean # of Employees of Fortune 500 Companies from 2015 to 2023',
        subtitle = 'The number of employees has been increasing steadily.',
-       caption = 'fortune.com: Fortune 500') +
+       caption = 'fortune.com') +
   theme_classic()
 ```
 
@@ -76,7 +76,7 @@ founder_is_ceo |>
                      labels = scales::percent_format()) +
   labs(title = '% of Fortune 500 Companies where the Founder is the CEO from 2015 to 2023',
        subtitle = 'About 3.5% of founders become the CEO of their company.',
-       caption = 'fortune.com: Fortune 500') +
+       caption = 'fortune.com') +
   theme_classic()
 ```
 
@@ -94,6 +94,6 @@ female_ceo |>
                      labels = scales::percent_format()) +
   labs(title = '% of Fortune 500 Companies with a Female CEO from 2015 to 2023',
        subtitle = 'The % of fortune 500 companies with female CEOs is steadily increasing.',
-       caption = 'fortune.com: Fortune 500') +
+       caption = 'fortune.com') +
   theme_classic()
 ```

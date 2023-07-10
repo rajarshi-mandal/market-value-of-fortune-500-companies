@@ -33,6 +33,49 @@ tbl_regression(x = fit_obj,
 ```
 
 ```{r}
-# Lorem Ipsum
+newobs = tibble(year = 2023, 
+                revenue_mil = 35000,
+                profit_mil = 3500,
+                asset_mil = 110000,
+                employees = c(100000,250000,500000,750000,1000000))
+
+pe <- posterior_epred(fit_obj, newdata = newobs) |> 
+  as_tibble() 
 ```
 
+```{r}
+colnames(pe)[colnames(pe) == 1] = '100000'
+colnames(pe)[colnames(pe) == 2] = '250000'
+colnames(pe)[colnames(pe) == 3] = '500000'
+colnames(pe)[colnames(pe) == 4] = '750000'
+colnames(pe)[colnames(pe) == 5] = '1000000'
+```
+
+```{r}
+pe <- pe |> 
+  pivot_longer(cols = c('100000','250000','500000','750000','1000000'), 
+               names_to = "number_of_employees",
+               values_to = "market_value")
+pe$number_of_employees <- as.numeric(pe$number_of_employees)
+pe$number_of_employees <- as.factor(pe$number_of_employees)
+```
+
+```{r}
+#| message: false
+#| warning: false
+pe |>
+  ggplot(aes(market_value, fill = number_of_employees)) +
+  geom_histogram(aes(y = after_stat(count/sum(count))),
+                   alpha = 0.5, 
+                   bins = 100, 
+                   position = "identity") +
+  labs(title = "Posterior for Market Value",
+       subtitle = "Companies with more employees have higher market value.",
+       x = "# of Employees",
+       y = "Probability",
+       caption = 'fortune.com') + 
+  scale_x_continuous(labels = scales::comma_format()) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_fill_discrete(name = "Number of Employees", labels = c('100,000','250,000','500,000','750,000','1,000,000'))
+  theme_classic()
+```

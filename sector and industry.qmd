@@ -43,7 +43,7 @@ business_sect |>
        subtitle = "Financials, energy, retailing, technology, and health care are the most\ncommon sectors.",
        x = 'Sector',
        y = 'Count',
-       caption = 'fortune.com: Fortune 500') +
+       caption = 'fortune.com') +
   coord_flip() +
   theme_classic()
 ```
@@ -57,7 +57,7 @@ business_ind |>
        subtitle = "Gas and electric ultities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
        x = 'Industry',
        y = 'Count',
-       caption = 'fortune.com: Fortune 500') +
+       caption = 'fortune.com') +
   coord_flip() +
   theme_classic()
 ```
