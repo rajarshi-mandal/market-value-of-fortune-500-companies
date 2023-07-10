@@ -29,7 +29,7 @@ website:
       contents: 
         - sector and industry.qmd
         - headquarters.qmd
-        - revenue and profit.qmd
+        - monetary statistics.qmd
 
   page-footer: 
     left: "Copyright 2023, Rajarshi Mandal" 

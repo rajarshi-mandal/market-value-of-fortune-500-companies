@@ -102,14 +102,6 @@ fortune$industry <- gsub('Scientific,Photographic and Control Equipment', 'Scien
 ```
 
 ```{r}
-original <- fortune |>
-  filter(year != 2014)
-updated <- fortune |>
-  filter(year == 2014) |>
-  mutate(revenues = revenues*100)
-fortune <- rbind(original, updated) |>
-  mutate(revenue_mil = coalesce(revenues/100, revenues_m))
-fortune <- subset(fortune, select = -c(revenues, revenues_m))
 fortune <- fortune |>
   mutate(profit_mil = coalesce(profits, profits_m))
 fortune <- subset(fortune, select = -c(profits, profits_m))
@@ -119,6 +111,14 @@ fortune <- subset(fortune, select = -c(assets, assets_m, total_assets, sales))
 ```
 
 ```{r}
+original <- fortune |>
+  filter(year != 2014)
+updated <- fortune |>
+  filter(year == 2014) |>
+  mutate(revenues = revenues*100)
+fortune <- rbind(original, updated) |>
+  mutate(revenue_mil = coalesce(revenues/100, revenues_m))
+fortune <- subset(fortune, select = -c(revenues, revenues_m))
 original <- fortune |>
   filter(year != 2013)
 updated <- fortune |>
