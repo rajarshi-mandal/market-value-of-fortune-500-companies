@@ -1,0 +1,71 @@
+---
+title: "Newcomers and Global 500"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(forcats)
+```
+
+```{r}
+fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
+  select(year, newcomer_to_fortune_500, global_500)
+```
+
+```{r}
+newcomer <- fortune |>
+  select(year, newcomer_to_fortune_500) |>
+  drop_na() |>
+  count(newcomer_to_fortune_500, .by = year) |>
+  filter(newcomer_to_fortune_500 == 'yes') |>
+  select(.by, n) |>
+  mutate(n = n/500)
+```
+
+```{r}
+global <- fortune |>
+  select(year, global_500) |>
+  drop_na() |>
+  count(global_500, .by = year) |>
+  filter(global_500 == 'yes') |>
+  select(.by, n) |>
+  mutate(n = n/500)
+```
+
+```{r}
+newcomer |>
+  ggplot(aes(x = .by, y = n)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0')+
+  scale_x_continuous('Year',
+                     breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
+                     limits = c(2015,2023)) +
+  scale_y_continuous('% of Fortune 500 Companies that are Newcomers',
+                     breaks = c(0.04,0.05,0.06,0.07,0.08),
+                     limits = c(0.04,0.08),
+                     labels = scales::percent_format()) +
+  labs(title = '% of Fortune 500 Companies that are Newcomers to the List from 2015 to 2023',
+       subtitle = 'About 5.4% of companies are appearing on the list for the first time.')
+```
+
+```{r}
+global |>
+  ggplot(aes(x = .by, y = n)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0') +
+  scale_x_continuous('Year',
+                     breaks = c(2016,2017,2018,2019,2020,2021,2022,2023),
+                     limits = c(2016,2023)) +
+  scale_y_continuous('% of Fortune 500 Companies that are Global 500 Comapnies',
+                     breaks = c(0.23,0.235,0.24,0.245,0.25,0.255,0.26),
+                     limits = c(0.2325,0.2625),
+                     labels = scales::percent_format()) +
+  labs(title = '% of Fortune 500 Companies that are Global 500 Comapnies from 2016 to 2023',
+       subtitle = 'About 24.6% of fortune 500 companies are global 500 companies.')
+```
