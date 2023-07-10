@@ -30,6 +30,7 @@ website:
         - sector and industry.qmd
         - headquarters.qmd
         - monetary statistics.qmd
+        - ceo and employees.qmd
 
   page-footer: 
     left: "Copyright 2023, Rajarshi Mandal" 

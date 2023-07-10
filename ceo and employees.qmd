@@ -1,0 +1,94 @@
+---
+title: "CEO and Employees"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(forcats)
+```
+
+```{r}
+fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
+  select(rank, year, founder_is_ceo, foreign_born_ceo, female_ceo, employees) |>
+  filter(rank <= 500)
+```
+
+```{r}
+employees <- fortune |>
+  summarize(mean_employees = mean(employees, na.rm = TRUE), .by = year) |>
+  filter(year >= 2015)
+```
+
+```{r}
+founder_is_ceo <- fortune |>
+  select(year, founder_is_ceo) |>
+  drop_na() |>
+  count(founder_is_ceo, .by = year) |>
+  filter(founder_is_ceo == 'yes') |>
+  select(.by, n) |>
+  mutate(n = n/500)
+```
+
+```{r}
+female_ceo <- fortune |>
+  select(year, female_ceo) |>
+  drop_na() |>
+  count(female_ceo, .by = year) |>
+  filter(female_ceo == 'yes') |>
+  select(.by, n) |>
+  mutate(n = n/500)
+```
+
+```{r}
+employees |>
+  ggplot(aes(x = year, y = mean_employees)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0') +
+  scale_x_continuous('Year',
+                     breaks = c(2015,2017,2019,2021,2023),
+                     limits = c(2015,2023)) +
+  scale_y_continuous('Mean # of Employees',
+                     breaks = c(53000,55000,57000,59000,61000),
+                     limits = c(53000,61000),
+                     labels = scales::comma_format()) +
+  labs(title = 'Mean # of Employees of Fortune 500 Companies from 2015 to 2023',
+       subtitle = 'The number of employees has been increasing steadily.')
+```
+
+```{r}
+founder_is_ceo |>
+  ggplot(aes(x = .by, y = n)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0')+
+  scale_x_continuous('Year',
+                     breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
+                     limits = c(2015,2023)) +
+  scale_y_continuous('% of Fortune 500 Companies where the Founder is the CEO',
+                     breaks = c(0.025,0.03,0.035,0.04,0.045,0.05),
+                     limits = c(0.025,0.0475),
+                     labels = scales::percent_format()) +
+  labs(title = '% of Fortune 500 Companies where the Founder is the CEO from 2015 to 2023',
+       subtitle = 'About 3.5% of founders become the CEO of their company.')
+```
+
+```{r}
+female_ceo |>
+  ggplot(aes(x = .by, y = n)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0') +
+  scale_x_continuous('Year',
+                     breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
+                     limits = c(2015,2023)) +
+  scale_y_continuous('% of Fortune 500 Companies with a Female CEO',
+                     breaks = c(0.04,0.05,0.06,0.07,0.08,0.09,0.10,0.11),
+                     limits = c(0.045,0.105),
+                     labels = scales::percent_format()) +
+  labs(title = '% of Fortune 500 Companies with a Female CEO from 2015 to 2023',
+       subtitle = 'The % of fortune 500 companies with female CEOs is steadily increasing.')
+```

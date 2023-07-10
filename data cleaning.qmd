@@ -136,5 +136,9 @@ fortune <- subset(fortune, select = -c(market_value_2013,market_value_2014,marke
 ```
 
 ```{r}
+fortune <- subset(fortune, select = -c(profit_as_a_percent_of_sales, profit_as_a_percent_of_assets, profit_as_a_percent_of_shareholder_equity, total_shareholder_equity, profit_percent_sales, profit_percent_assets, profit_percent_shareholder_equity, stockholders_equity, measure_up_rank))
+```
+
+```{r}
 write.csv(fortune, "data/Cleaned Data.csv", na = "", row.names = FALSE)
 ```
