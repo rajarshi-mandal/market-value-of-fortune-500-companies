@@ -11,6 +11,7 @@ sidebar: false
 library(tidyverse)
 library(readr)
 library(rstanarm)
+library(gtsummary)
 ```
 
 ```{r}
@@ -38,5 +39,5 @@ fit_obj
 ```
 
 ```{r}
-
+tbl_regression(fit_obj)
 ```

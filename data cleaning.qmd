@@ -152,5 +152,6 @@ fortune <- subset(fortune, select = -c(revenue_percent_change, profits_percent_c
 ```{r}
 fortune <- fortune[, c('name','rank','year','industry','sector','headquarters_state','headquarters_city','market_value_mil','revenue_mil','profit_mil','asset_mil','employees','founder_is_ceo','female_ceo','newcomer_to_fortune_500','global_500')] |>
   filter(rank <= 500)
+fortune <- fortune[order(fortune$year, fortune$rank), ]
 write.csv(fortune, "data/Cleaned Data.csv", na = "", row.names = FALSE)
 ```
