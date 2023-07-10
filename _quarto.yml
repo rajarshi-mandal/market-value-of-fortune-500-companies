@@ -20,7 +20,6 @@ website:
           - text: Source Code
             url:  https://github.com/rajarshi-mandal/fortune-500
 
-
   sidebar:
     - id: eda
       title: "Exploratory Data Analysis"
@@ -30,15 +29,25 @@ website:
       contents: 
         - sector and industry.qmd
         - headquarters.qmd
-  
 
-  back-to-top-navigation: true
   page-footer: 
     left: "Copyright 2023, Rajarshi Mandal" 
     right: 
       - icon: github
         href: https://github.com/rajarshi-mandal/fortune-500
     background: '#f8f9fa'
+    
+  search: 
+    location: navbar
+    type: textbox
+    
+  back-to-top-navigation: true
+  page-navigation: true
+
+
+theme:
+  light: flatly
+  dark: darkly
   
 
 format:
