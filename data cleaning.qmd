@@ -78,8 +78,8 @@ colnames(fortune)[colnames(fortune) == "market_value_on_march_31_2014"] = "marke
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2015"] = "market_value_2015"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2016_m"] = "market_value_2016"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2017_m"] = "market_value_2017"
-colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2018_m"] = "market_value_2018"
-colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2019_m"] = "market_value_2019"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_29_2018_m"] = "market_value_2018"
+colnames(fortune)[colnames(fortune) == "market_value_as_of_march_29_2019_m"] = "market_value_2019"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2020_m"] = "market_value_2020"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2021_m"] = "market_value_2021"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2022_m"] = "market_value_2022"
@@ -115,7 +115,24 @@ fortune <- fortune |>
 fortune <- subset(fortune, select = -c(profits, profits_m))
 fortune <- fortune |>
   mutate(asset_mil = coalesce(total_assets, assets/100, assets_m))
-fortune <- subset(fortune, select = -c(assets, assets_m, total_assets))
+fortune <- subset(fortune, select = -c(assets, assets_m, total_assets, sales))
+```
+
+```{r}
+original <- fortune |>
+  filter(year != 2013)
+updated <- fortune |>
+  filter(year == 2013) |>
+  mutate(market_value_2013 = market_value_2013/100)
+fortune <- rbind(original, updated) |>
+  mutate(market_value_mil = coalesce(market_value_2013,market_value_2014,market_value_2015,
+                                     market_value_2016,market_value_2017,market_value_2018,
+                                     market_value_2019,market_value_2020,market_value_2021,
+                                     market_value_2022,market_value_2023))
+fortune <- subset(fortune, select = -c(market_value_2013,market_value_2014,market_value_2015,
+                                       market_value_2016,market_value_2017,market_value_2018,
+                                       market_value_2019,market_value_2020,market_value_2021,
+                                       market_value_2022,market_value_2023))
 ```
 
 ```{r}
