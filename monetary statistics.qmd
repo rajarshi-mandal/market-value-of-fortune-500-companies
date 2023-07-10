@@ -15,14 +15,7 @@ library(forcats)
 
 ```{r}
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
-  select(rank, year, revenue_mil, profit_mil, asset_mil, market_value_mil) |>
-  filter(rank <= 500)
-```
-
-```{r}
-revenue <- fortune |>
-  summarize(mean_revenue_mil = mean(revenue_mil, na.rm = TRUE), .by = year)
-revenue$mean_revenue_mil[revenue$year == 2013] <- mean(c(23529.903, 24421.006))
+  select(rank, year, revenue_mil, profit_mil, asset_mil, market_value_mil)
 ```
 
 ```{r}
@@ -30,6 +23,12 @@ market_value <- fortune |>
   filter(year >= 2013) |>
   summarize(mean_market_value_mil = mean(market_value_mil, na.rm = TRUE), .by = year)
 market_value$mean_market_value_mil[market_value$year == 2013] <- 34459.82 - (37372.77 - 34459.82)/2
+```
+
+```{r}
+revenue <- fortune |>
+  summarize(mean_revenue_mil = mean(revenue_mil, na.rm = TRUE), .by = year)
+revenue$mean_revenue_mil[revenue$year == 2013] <- mean(c(23529.903, 24421.006))
 ```
 
 ```{r}
@@ -46,22 +45,6 @@ asset$mean_asset_mil[asset$year == 2013] <- 74061.85 - (76292.42 - 74061.85)/2
 ```
 
 ```{r}
-revenue |>
-  ggplot(aes(x = year, y = mean_revenue_mil)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0') +
-  scale_x_continuous('Year',
-                     breaks = c(1996,1999,2002,2005,2008,2011,2014,2017,2020,2023),
-                     limits = c(1996,2023)) +
-  scale_y_continuous('Mean Revenue (in millions, USD)',
-                     breaks = c(10000,15000,20000,25000,30000,35000,40000),
-                     limits = c(9000,36500),
-                     labels = scales::dollar_format()) +
-  labs(title = 'Mean Revenue of Fortune 500 Companies from 1996 to 2023',
-       subtitle = 'There has been steady growth over the years.')
-```
-
-```{r}
 market_value |>
   ggplot(aes(x = year, y = mean_market_value_mil)) +
   geom_point(color = '#0000c0') +
@@ -75,6 +58,22 @@ market_value |>
                      labels = scales::dollar_format()) +
   labs(title = 'Mean Market Value of Fortune 500 Companies from 2013 to 2023',
        subtitle = 'Market value has recently spiked.')
+```
+
+```{r}
+revenue |>
+  ggplot(aes(x = year, y = mean_revenue_mil)) +
+  geom_point(color = '#0000c0') +
+  geom_line(color = '#0000c0') +
+  scale_x_continuous('Year',
+                     breaks = c(1996,1999,2002,2005,2008,2011,2014,2017,2020,2023),
+                     limits = c(1996,2023)) +
+  scale_y_continuous('Mean Revenue (in millions, USD)',
+                     breaks = c(10000,15000,20000,25000,30000,35000,40000),
+                     limits = c(9000,36500),
+                     labels = scales::dollar_format()) +
+  labs(title = 'Mean Revenue of Fortune 500 Companies from 1996 to 2023',
+       subtitle = 'There has been steady growth over the years.')
 ```
 
 ```{r}
