@@ -18,18 +18,18 @@ fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE)
 ```
 
 ```{r}
-train <- fortune |>
-  select(revenues_m, profits_m, assets_m, employees) |>
-  drop_na()
+#train <- fortune |>
+#  select(revenues_m, profits_m, assets_m, employees) |>
+#  drop_na()
 ```
 
 ```{r}
-fit_obj <- stan_glm(formula = revenues_m ~ profits_m + assets_m + employees,
-                    data = train,
-                    refresh = 0,
-                    seed = 42)
+#fit_obj <- stan_glm(formula = revenues_m ~ profits_m + assets_m + employees,
+#                    data = train,
+#                    refresh = 0,
+#                    seed = 42)
 ```
 
 ```{r}
-fit_obj
+#fit_obj
 ```
