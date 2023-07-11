@@ -18,13 +18,13 @@ website:
       - icon: github
         menu:
           - text: Source Code
-            url:  https://github.com/rajarshi-mandal/fortune-500
+            url:  https://github.com/rajarshi-mandal/market-value-of-fortune-500-companies
 
   sidebar:
     - id: eda
       title: "Background Graphics"
       style: "docked"
-      background: '#f8f9fa'
+      background: '#0d6efd'
       collapse-level: 2
       contents: 
         - sector and industry.qmd
@@ -37,8 +37,8 @@ website:
     left: "Copyright 2023, Rajarshi Mandal" 
     right: 
       - icon: github
-        href: https://github.com/rajarshi-mandal/fortune-500
-    background: '#f8f9fa'
+        href: https://github.com/rajarshi-mandal/market-value-of-fortune-500-companies
+    background: '#0d6efd'
     
   search: 
     location: navbar
@@ -55,6 +55,6 @@ theme:
   
 format:
   html:
-    theme: cosmo
+    theme: '#0d6efd'
     css: styles.css
     toc: true
