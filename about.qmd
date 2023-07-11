@@ -11,4 +11,4 @@ My name is Rajarshi Mandal, and I am a student at William Diamond Middle School.
 
 ## Sources
 
-The data was scraped from *fortune.com* and uploaded to *kaggle.com* by Garreth Lee on June 15, 2023 in a .csv file.
+The data was scraped from [fortune.com](fortune.com) and uploaded to [kaggle.com](https://www.kaggle.com/datasets/garrethlee/fortune-500-companies-dataset) by Garreth Lee on June 15, 2023 in a .csv file. After being cleaned, the final dataset was uploaded back to [kaggle.com](https://www.kaggle.com/datasets/rm1000/fortune-500-companies) for others to use.
