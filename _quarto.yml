@@ -3,7 +3,7 @@ project:
 
 
 website:
-  title: "Final Project"
+  title: "Market Value of Fortune 500 Companies"
   
   navbar:
     left:
@@ -11,7 +11,7 @@ website:
         text: Home
       - sidebar:eda
       - href: model.qmd
-        text: Model Training
+        text: Model
       - href: about.qmd
         text: About
     tools:
@@ -22,7 +22,7 @@ website:
 
   sidebar:
     - id: eda
-      title: "Exploratory Data Analysis"
+      title: "Background Graphics"
       style: "docked"
       background: '#f8f9fa'
       collapse-level: 2
