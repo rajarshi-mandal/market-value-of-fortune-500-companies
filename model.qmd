@@ -182,7 +182,7 @@ pe |>
        x = "Market Value ($m)",
        y = "Probability",
        caption = 'fortune.com',
-       fill = "Revenue ($m)") + 
+       fill = "Profit ($m)") + 
   scale_x_continuous(labels = scales::comma_format()) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_fill_discrete(labels = c('2,500','5,000','10,000','25,000','50,000')) +
@@ -233,7 +233,7 @@ pe |>
        caption = 'fortune.com',
        fill = "Assets ($m)") + 
   scale_x_continuous(labels = scales::comma_format()) +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 0.5)) +
   scale_fill_discrete(labels = c('2,500','5,000','10,000','25,000','50,000')) +
   theme_classic()
 ```
