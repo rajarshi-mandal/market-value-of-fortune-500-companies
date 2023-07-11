@@ -1,4 +1,4 @@
-# Fortune 500
+# Market Value of Fortune 500 Companies from Economic Indicators
 
 This is my final project for [Kane’s Free Data Science Course](https://bootcamp.davidkane.info/). The Quarto website is below:
 
