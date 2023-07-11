@@ -8,5 +8,5 @@ sidebar: false
 
 Hello!
 ```{r}
-1 + 1
+# Lorem Ipsum
 ```
