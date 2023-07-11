@@ -1,9 +1,15 @@
 ---
-title: "Model Training"
+title: "Model"
 execute: 
   echo: false
 sidebar: false
 ---
+
+## Model Definition
+
+$$y_i = \beta_0  + \beta_1 x_{1,i} + \beta_2 x_{2,i} + \beta_3 x_{3,i} + \beta_4 x_{4,i} + \beta_5 x_{5,i} + \epsilon_i$$
+
+with $y = \text{Market Value (\$m)}$, $x_1 = \text{year}$, $x_2 = \text{Revenue (\$m)}$, $x_3 = \text{Profit (\$m)}$, $x_4 = \text{Assets (\$m)}$, $x_5 = \text{Employees}$, and $\epsilon_i \sim N(0, \sigma^2)$.
 
 ```{r}
 #| message: false
@@ -27,10 +33,14 @@ fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil
                     seed = 42)
 ```
 
+## Model Parameters
+
 ```{r}
 tbl_regression(x = fit_obj,
                label = list(year ~ "Year", revenue_mil ~ "Revenue", profit_mil ~ 'Profit', asset_mil ~ 'Assets', employees ~ 'Employees'))
 ```
+
+## Posteriors
 
 ```{r}
 newobs = tibble(year = 2023, 
@@ -40,7 +50,7 @@ newobs = tibble(year = 2023,
                 employees = c(100000,250000,500000,750000,1000000))
 
 pe <- posterior_epred(fit_obj, newdata = newobs) |> 
-  as_tibble() 
+  as_tibble()
 ```
 
 ```{r}
@@ -127,5 +137,103 @@ pe |>
   scale_x_continuous(labels = scales::comma_format()) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_fill_discrete(labels = c('100,000','200,000','300,000','400,000','500,000')) +
+  theme_classic()
+```
+
+```{r}
+newobs = tibble(year = 2023, 
+                revenue_mil = 35000,
+                profit_mil = c(2500,5000,10000,25000,50000),
+                asset_mil = 110000,
+                employees = 61000)
+
+pe <- posterior_epred(fit_obj, newdata = newobs) |> 
+  as_tibble() 
+```
+
+```{r}
+colnames(pe)[colnames(pe) == 1] = '2500'
+colnames(pe)[colnames(pe) == 2] = '5000'
+colnames(pe)[colnames(pe) == 3] = '10000'
+colnames(pe)[colnames(pe) == 4] = '25000'
+colnames(pe)[colnames(pe) == 5] = '50000'
+```
+
+```{r}
+pe <- pe |> 
+  pivot_longer(cols = c('2500','5000','10000','25000','50000'), 
+               names_to = "profit_m",
+               values_to = "market_value")
+pe$profit_m <- as.numeric(pe$profit_m)
+pe$profit_m <- as.factor(pe$profit_m)
+```
+
+```{r}
+#| message: false
+#| warning: false
+pe |>
+  ggplot(aes(market_value, fill = profit_m)) +
+  geom_histogram(aes(y = after_stat(count/sum(count))),
+                   alpha = 0.5, 
+                   bins = 1000, 
+                   position = "identity") +
+  labs(title = "Posterior for Market Value",
+       subtitle = "Fortune 500 Companies with higher profit have much higher market value.",
+       x = "Market Value ($m)",
+       y = "Probability",
+       caption = 'fortune.com',
+       fill = "Revenue ($m)") + 
+  scale_x_continuous(labels = scales::comma_format()) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_fill_discrete(labels = c('2,500','5,000','10,000','25,000','50,000')) +
+  theme_classic()
+```
+
+```{r}
+newobs = tibble(year = 2023, 
+                revenue_mil = 35000,
+                profit_mil = 3500,
+                asset_mil = c(25000,50000,100000,250000,500000),
+                employees = 61000)
+
+pe <- posterior_epred(fit_obj, newdata = newobs) |> 
+  as_tibble() 
+```
+
+```{r}
+colnames(pe)[colnames(pe) == 1] = '25000'
+colnames(pe)[colnames(pe) == 2] = '50000'
+colnames(pe)[colnames(pe) == 3] = '100000'
+colnames(pe)[colnames(pe) == 4] = '250000'
+colnames(pe)[colnames(pe) == 5] = '500000'
+```
+
+```{r}
+pe <- pe |> 
+  pivot_longer(cols = c('25000','50000','100000','250000','500000'), 
+               names_to = "asset_m",
+               values_to = "market_value")
+pe$asset_m <- as.numeric(pe$asset_m)
+pe$asset_m <- as.factor(pe$asset_m)
+```
+
+```{r}
+#| message: false
+#| warning: false
+pe |>
+  ggplot(aes(market_value, fill = asset_m)) +
+  geom_histogram(aes(y = after_stat(count/sum(count))),
+                   alpha = 0.5, 
+                   bins = 100, 
+                   position = "identity") +
+  labs(title = "Posterior for Market Value",
+       subtitle = "Fortune 500 Companies with higher assets have lower market value.",
+       x = "Market Value ($m)",
+       y = "Probability",
+       caption = 'fortune.com',
+       fill = "Assets ($m)") + 
+  scale_x_continuous(labels = scales::comma_format()) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_fill_discrete(labels = c('2,500','5,000','10,000','25,000','50,000')) +
   theme_classic()
 ```
