@@ -12,6 +12,8 @@ website:
       - sidebar:eda
       - href: model.qmd
         text: Model
+      - href: sources.qmd
+        text: Sources
       - href: about.qmd
         text: About
     tools:
@@ -24,7 +26,7 @@ website:
     - id: eda
       title: "Background Graphics"
       style: "docked"
-      background: '#0d6efd'
+      background: '#0080ff'
       collapse-level: 2
       contents: 
         - sector and industry.qmd
@@ -38,7 +40,7 @@ website:
     right: 
       - icon: github
         href: https://github.com/rajarshi-mandal/market-value-of-fortune-500-companies
-    background: '#0d6efd'
+    background: '#0080ff'
     
   search: 
     location: navbar
@@ -55,6 +57,6 @@ theme:
   
 format:
   html:
-    theme: '#0d6efd'
+    theme: '#0080ff'
     css: styles.css
     toc: true

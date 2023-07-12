@@ -8,7 +8,3 @@ This website was created as my final project for [Kane’s Free Data Science Cou
 
 ## About Me
 My name is Rajarshi Mandal, and I am a student at William Diamond Middle School. The code for this project can be found at [my Github account](https://github.com/rajarshi-mandal).
-
-## Sources
-
-The data was scraped from [fortune.com](fortune.com) and uploaded to [kaggle.com](https://www.kaggle.com/datasets/garrethlee/fortune-500-companies-dataset) by Garreth Lee on June 15, 2023 in a .csv file. After being cleaned, the final dataset was uploaded back to [kaggle.com](https://www.kaggle.com/datasets/rm1000/fortune-500-companies) for others to use.

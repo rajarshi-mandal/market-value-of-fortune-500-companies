@@ -1,0 +1,6 @@
+---
+title: "Sources"
+sidebar: false
+---
+
+The data was scraped from [fortune.com](fortune.com) and uploaded to [kaggle.com](https://www.kaggle.com/datasets/garrethlee/fortune-500-companies-dataset) by Garreth Lee on June 15, 2023 in a .csv file. First, the columns were all converted to integers (special characters were remove). Next, some columns were merged into other columns. Finally, some columns were renamed for clarity. After being cleaned, the final dataset was uploaded back to [kaggle.com](https://www.kaggle.com/datasets/rm1000/fortune-500-companies) for others to use.

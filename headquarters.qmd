@@ -37,7 +37,7 @@ city_hq <- unique(fortune) |>
 ```{r}
 state_hq |>
   ggplot(aes(x = headquarters_state, y = n)) +
-  geom_bar(stat = 'identity', fill = '#0d6efd') +
+  geom_bar(stat = 'identity', fill = '#0080ff') +
   scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(title = "Location of Fortune 500 Companies' Headquarters",
        subtitle = "New York, California, Texas, Illinois, Ohio, and Pensylvania are the most common states.",
@@ -50,7 +50,7 @@ state_hq |>
 ```{r}
 city_hq |>
   ggplot(aes(x = headquarters_city, y = n)) +
-  geom_bar(stat = 'identity', fill = '#0d6efd') +
+  geom_bar(stat = 'identity', fill = '#0080ff') +
   scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(title = "Location of Fortune 500 Companies' Headquarters",
        subtitle = "New York City, Houston, Atlanta, Chicago, and Dallas are the most common cities.",
