@@ -16,12 +16,16 @@ library(gtsummary)
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 train <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(market_value_mil, year, revenue_mil, profit_mil, asset_mil, employees) |>
   drop_na()
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil + asset_mil + employees,
                     data = train,
                     refresh = 0,
@@ -29,6 +33,8 @@ fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 newobs = tibble(year = 2023, 
                 revenue_mil = 35000,
                 profit_mil = 3500,
@@ -40,6 +46,8 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 colnames(pe)[colnames(pe) == 1] = '100000'
 colnames(pe)[colnames(pe) == 2] = '250000'
 colnames(pe)[colnames(pe) == 3] = '500000'
@@ -48,6 +56,8 @@ colnames(pe)[colnames(pe) == 5] = '1000000'
 ```
 
 ```{r}
+#| message: false
+#| warning: false
 pe <- pe |> 
   pivot_longer(cols = c('100000','250000','500000','750000','1000000'), 
                names_to = "number_of_employees",
@@ -77,4 +87,4 @@ pe |>
   theme_classic()
 ```
 
-Fortune 500 companies have been the bedrock of the global economy and represent two-thirds of the United States' GDP. The data was scraped from Fortune and uploaded to Kaggle. Then, the data was cleaned and visualized. Finally, I estimated a Bayesian regression model with market value as the dependent variable and year, revenue, profit, and assets as the independent variables.
+Fortune 500 companies have been the bedrock of the global economy and represent two-thirds of the United States' GDP. The data used for analysis was scraped from Fortune and uploaded to Kaggle. Then, it was cleaned and visualized. Finally, a Bayesian regression model was trained with market value as the dependent variable and year, revenue, profit, and assets as the independent variables.
