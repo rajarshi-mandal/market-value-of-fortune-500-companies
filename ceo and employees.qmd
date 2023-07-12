@@ -47,8 +47,8 @@ female_ceo <- fortune |>
 ```{r}
 employees |>
   ggplot(aes(x = year, y = mean_employees)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0') +
+  geom_point(color = '#0d6efd') +
+  geom_line(color = '#0d6efd') +
   scale_x_continuous('Year',
                      breaks = c(2015,2017,2019,2021,2023),
                      limits = c(2015,2023)) +
@@ -65,8 +65,8 @@ employees |>
 ```{r}
 founder_is_ceo |>
   ggplot(aes(x = .by, y = n)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0')+
+  geom_point(color = '#0d6efd') +
+  geom_line(color = '#0d6efd')+
   scale_x_continuous('Year',
                      breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
                      limits = c(2015,2023)) +
@@ -83,8 +83,8 @@ founder_is_ceo |>
 ```{r}
 female_ceo |>
   ggplot(aes(x = .by, y = n)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0') +
+  geom_point(color = '#0d6efd') +
+  geom_line(color = '#0d6efd') +
   scale_x_continuous('Year',
                      breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
                      limits = c(2015,2023)) +

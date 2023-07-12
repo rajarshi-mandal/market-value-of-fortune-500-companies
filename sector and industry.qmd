@@ -37,7 +37,7 @@ business_ind <- unique(fortune) |>
 ```{r}
 business_sect |>
   ggplot(aes(x = sector, y = n)) +
-  geom_bar(stat = 'identity', fill = '#0000c0') +
+  geom_bar(stat = 'identity', fill = '#0d6efd') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Business Sectors of Fortune 500 Companies",
        subtitle = "Financials, energy, retailing, technology, and health care are the most\ncommon sectors.",
@@ -51,7 +51,7 @@ business_sect |>
 ```{r}
 business_ind |>
   ggplot(aes(x = industry, y = n)) +
-  geom_bar(stat = 'identity', fill = '#0000c0') +
+  geom_bar(stat = 'identity', fill = '#0d6efd') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Industries of Fortune 500 Companies",
        subtitle = "Gas and electric ultities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",

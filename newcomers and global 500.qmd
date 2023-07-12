@@ -41,8 +41,8 @@ global <- fortune |>
 ```{r}
 newcomer |>
   ggplot(aes(x = .by, y = n)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0')+
+  geom_point(color = '#0d6efd') +
+  geom_line(color = '#0d6efd')+
   scale_x_continuous('Year',
                      breaks = c(2015,2016,2017,2018,2019,2020,2021,2022,2023),
                      limits = c(2015,2023)) +
@@ -59,8 +59,8 @@ newcomer |>
 ```{r}
 global |>
   ggplot(aes(x = .by, y = n)) +
-  geom_point(color = '#0000c0') +
-  geom_line(color = '#0000c0') +
+  geom_point(color = '#0d6efd') +
+  geom_line(color = '#0d6efd') +
   scale_x_continuous('Year',
                      breaks = c(2016,2017,2018,2019,2020,2021,2022,2023),
                      limits = c(2016,2023)) +
