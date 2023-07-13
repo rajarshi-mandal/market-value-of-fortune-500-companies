@@ -87,4 +87,4 @@ pe |>
   theme_classic()
 ```
 
-Fortune 500 companies have been the bedrock of the global economy and represent two-thirds of the United States' GDP. The data used for analysis was scraped from Fortune and uploaded to Kaggle. Then, it was cleaned and visualized. Finally, a Bayesian regression model was trained with market value as the dependent variable and year, revenue, profit, and assets as the independent variables.
+Fortune 500 companies are an integral part of the United States' economy and represent two-thirds of its GDP. In order to analyze these crucial corporations, I scraped data from Fortune's website and uploaded it to Kaggle. Afterwards, I cleaned and visualized the data. Finally, I trained a Bayesian regression model with market value as the dependent variable and year, revenue, profit, and assets as the independent variables.
