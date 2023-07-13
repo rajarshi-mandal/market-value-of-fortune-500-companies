@@ -7,17 +7,20 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(readr)
 library(forcats)
 ```
 
 ```{r}
+# Reading data
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(rank, name, sector, industry)
 ```
 
 ```{r}
+# Creating a dataframe
 business_sect <- fortune |>
   select(name, sector) |>
   unique() |>
@@ -28,6 +31,7 @@ business_sect <- fortune |>
 ```
 
 ```{r}
+# Creating another dataframe
 business_ind <- fortune |>
   select(name, industry) |>
   unique() |>
@@ -39,6 +43,7 @@ business_ind <- fortune |>
 ```
 
 ```{r}
+# Plotting business_sect dataframe
 business_sect |>
   ggplot(aes(x = sector, y = n)) +
   geom_bar(stat = 'identity', fill = '#0080ff') +
@@ -53,6 +58,7 @@ business_sect |>
 ```
 
 ```{r}
+# Plotting business_ind dataframe
 business_ind |>
   ggplot(aes(x = industry, y = n)) +
   geom_bar(stat = 'identity', fill = '#0080ff') +

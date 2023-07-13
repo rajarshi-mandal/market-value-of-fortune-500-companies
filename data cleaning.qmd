@@ -7,6 +7,7 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(readr)
 library(dplyr)
@@ -15,15 +16,18 @@ library(stringr)
 ```
 
 ```{r}
+# Reading in data
 fortune <- read_tsv('data/Original Data.tsv',
                     col_types = cols(.default = col_character()))
 ```
 
 ```{r}
+# Renaming columns
 fortune <- clean_names(fortune,case=c('snake'))
 ```
 
 ```{r}
+# Removing miscellaneous characters and converting columns to double format
 fortune$year <- as.numeric(gsub("[^0-9.-]", "", fortune$year))
 fortune$revenues <- as.numeric(gsub("[^0-9.-]", "", fortune$revenues))
 fortune$profits <- as.numeric(gsub("[^0-9.-]", "", fortune$profits))
@@ -37,6 +41,7 @@ fortune$employees <- as.numeric(gsub("[^0-9.-]", "", fortune$employees))
 ```
 
 ```{r}
+# Removing miscellaneous characters and converting columns to double format
 fortune$market_value_on_march_29_2013 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_on_march_29_2013))
 fortune$market_value_on_march_31_2014 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_on_march_31_2014))
 fortune$market_value_as_of_march_31_2015 <- as.numeric(gsub("[^0-9.-]", "", fortune$market_value_as_of_march_31_2015))
@@ -51,6 +56,7 @@ fortune$market_value_as_of_march_31_2023_m <- as.numeric(gsub("[^0-9.-]", "", fo
 ```
 
 ```{r}
+# Removing miscellaneous characters and converting columns to double format
 fortune$profit_percent_sales <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_sales))
 fortune$profit_percent_assets <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_assets))
 fortune$profit_percent_shareholder_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$profit_percent_shareholder_equity))
@@ -60,6 +66,7 @@ fortune$profit_as_a_percent_of_shareholder_equity <- as.numeric(gsub("[^0-9.-]",
 ```
 
 ```{r}
+# Removing miscellaneous characters and converting columns to double format
 fortune$rank <- as.numeric(gsub("[^0-9.-]", "", fortune$rank))
 fortune$change_in_rank_full_1000 <- as.numeric(gsub("[^0-9.-]", "", fortune$change_in_rank_full_1000))
 fortune$change_in_rank_500_only <- as.numeric(gsub("[^0-9.-]", "", fortune$change_in_rank_500_only))
@@ -67,6 +74,7 @@ fortune$measure_up_rank <- as.numeric(gsub("[^0-9.-]", "", fortune$measure_up_ra
 ```
 
 ```{r}
+# Removing miscellaneous characters and converting columns to double format
 fortune$revenue_percent_change <- as.numeric(gsub("[^0-9.-]", "", fortune$revenue_percent_change))
 fortune$profits_percent_change <- as.numeric(gsub("[^0-9.-]", "", fortune$profits_percent_change))
 fortune$total_shareholder_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$total_shareholder_equity))
@@ -74,6 +82,7 @@ fortune$stockholders_equity <- as.numeric(gsub("[^0-9.-]", "", fortune$stockhold
 ```
 
 ```{r}
+# Renaming columns
 colnames(fortune)[colnames(fortune) == "market_value_on_march_29_2013"] = "market_value_2013"
 colnames(fortune)[colnames(fortune) == "market_value_on_march_31_2014"] = "market_value_2014"
 colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2015"] = "market_value_2015"
@@ -88,6 +97,7 @@ colnames(fortune)[colnames(fortune) == "market_value_as_of_march_31_2023_m"] = "
 ```
 
 ```{r}
+# Renaming values in columns
 fortune$sector <- gsub('Hotels, Resturants & Leisure', 'Hotels, Restaurants & Leisure', fortune$sector)
 fortune$sector <- gsub('Food and Drug Stores', 'Food & Drug Stores', fortune$sector)
 fortune$industry <- gsub('Advertising, marketing', 'Advertising, Marketing', fortune$industry)
@@ -103,6 +113,7 @@ fortune$industry <- gsub('Scientific,Photographic and Control Equipment', 'Scien
 ```
 
 ```{r}
+# Merging columns
 fortune <- fortune |>
   mutate(profit_mil = coalesce(profits, profits_m))
 fortune <- subset(fortune, select = -c(profits, profits_m))
@@ -112,12 +123,14 @@ fortune <- subset(fortune, select = -c(assets, assets_m, total_assets, sales))
 ```
 
 ```{r}
+# Merging columns
 fortune <- fortune |>
   mutate(newcomer_to_fortune_500 = coalesce(newcomer, newcomer_to_the_fortune_500))
 fortune <- subset(fortune, select = -c(newcomer, newcomer_to_the_fortune_500))
 ```
 
 ```{r}
+# Formatting revenue column
 original <- fortune |>
   filter(year != 2014)
 updated <- fortune |>
@@ -143,14 +156,17 @@ fortune <- subset(fortune, select = -c(market_value_2013,market_value_2014,marke
 ```
 
 ```{r}
+# Removing columns
 fortune <- subset(fortune, select = -c(profit_as_a_percent_of_sales, profit_as_a_percent_of_assets, profit_as_a_percent_of_shareholder_equity, total_shareholder_equity, profit_percent_sales, profit_percent_assets, profit_percent_shareholder_equity, stockholders_equity, measure_up_rank, foreign_born_ceo, measure_up))
 ```
 
 ```{r}
+# Removing columns
 fortune <- subset(fortune, select = -c(revenue_percent_change, profits_percent_change, gained_in_rank, dropped_in_rank, profitable, growth_in_jobs, best_companies, worlds_most_admired_companies, change_the_world, fastest_growing_companies, change_in_rank_full_1000, change_in_rank_500_only))
 ```
 
 ```{r}
+# Reordering columns, saving cleaned data
 fortune <- fortune[, c('name','rank','year','industry','sector','headquarters_state','headquarters_city','market_value_mil','revenue_mil','profit_mil','asset_mil','employees','founder_is_ceo','female_ceo','newcomer_to_fortune_500','global_500')] |>
   filter(rank <= 500)
 fortune <- fortune[order(fortune$year, fortune$rank), ]

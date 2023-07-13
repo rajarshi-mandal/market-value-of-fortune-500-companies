@@ -7,6 +7,7 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(dplyr)
 library(readr)
@@ -14,11 +15,13 @@ library(forcats)
 ```
 
 ```{r}
+# Reading data
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(year, newcomer_to_fortune_500, global_500)
 ```
 
 ```{r}
+# Creating a dataframe
 newcomer <- fortune |>
   select(year, newcomer_to_fortune_500) |>
   drop_na() |>
@@ -29,6 +32,7 @@ newcomer <- fortune |>
 ```
 
 ```{r}
+# Creating another dataframe
 global <- fortune |>
   select(year, global_500) |>
   drop_na() |>
@@ -39,6 +43,7 @@ global <- fortune |>
 ```
 
 ```{r}
+# Plotting newcomer dataframe
 newcomer |>
   ggplot(aes(x = .by, y = n)) +
   geom_point(color = '#0080ff') +
@@ -57,6 +62,7 @@ newcomer |>
 ```
 
 ```{r}
+# Plotting global dataframe
 global |>
   ggplot(aes(x = .by, y = n)) +
   geom_point(color = '#0080ff') +

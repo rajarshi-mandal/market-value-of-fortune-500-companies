@@ -9,6 +9,7 @@ sidebar: false
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(readr)
 library(rstanarm)
@@ -18,6 +19,7 @@ library(gtsummary)
 ```{r}
 #| message: false
 #| warning: false
+# Loading in cleaned data
 train <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(market_value_mil, year, revenue_mil, profit_mil, asset_mil, employees) |>
   drop_na()
@@ -26,6 +28,7 @@ train <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
 ```{r}
 #| message: false
 #| warning: false
+# Training model
 fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil + asset_mil + employees,
                     data = train,
                     refresh = 0,
@@ -35,6 +38,7 @@ fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil
 ```{r}
 #| message: false
 #| warning: false
+# Posterior predictions
 newobs = tibble(year = 2023, 
                 revenue_mil = 35000,
                 profit_mil = 3500,
@@ -48,6 +52,7 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```{r}
 #| message: false
 #| warning: false
+# Renaming values in columns
 colnames(pe)[colnames(pe) == 1] = '100000'
 colnames(pe)[colnames(pe) == 2] = '250000'
 colnames(pe)[colnames(pe) == 3] = '500000'
@@ -58,6 +63,7 @@ colnames(pe)[colnames(pe) == 5] = '1000000'
 ```{r}
 #| message: false
 #| warning: false
+# Formatting the dataframe
 pe <- pe |> 
   pivot_longer(cols = c('100000','250000','500000','750000','1000000'), 
                names_to = "number_of_employees",
@@ -69,6 +75,7 @@ pe$number_of_employees <- as.factor(pe$number_of_employees)
 ```{r}
 #| message: false
 #| warning: false
+# Plotting the dataframe
 pe |>
   ggplot(aes(market_value, fill = number_of_employees)) +
   geom_histogram(aes(y = after_stat(count/sum(count))),

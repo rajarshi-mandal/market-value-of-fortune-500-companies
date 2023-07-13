@@ -14,6 +14,7 @@ with $y = \text{Market Value (\$m)}$, $x_1 = \text{year}$, $x_2 = \text{Revenue 
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(readr)
 library(rstanarm)
@@ -21,12 +22,14 @@ library(gtsummary)
 ```
 
 ```{r}
+# Loading training data
 train <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(market_value_mil, year, revenue_mil, profit_mil, asset_mil, employees) |>
   drop_na()
 ```
 
 ```{r}
+# Instantiating model
 fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil + asset_mil + employees,
                     data = train,
                     refresh = 0,
@@ -36,6 +39,7 @@ fit_obj <- stan_glm(formula = market_value_mil ~ year + revenue_mil + profit_mil
 ## Model Parameters
 
 ```{r}
+# Printing model parameters
 tbl_regression(x = fit_obj,
                label = list(year ~ "Year", revenue_mil ~ "Revenue", profit_mil ~ 'Profit', asset_mil ~ 'Assets', employees ~ 'Employees'))
 ```
@@ -43,6 +47,7 @@ tbl_regression(x = fit_obj,
 ## Posteriors
 
 ```{r}
+# Creating obs
 newobs = tibble(year = 2023, 
                 revenue_mil = 35000,
                 profit_mil = 3500,
@@ -54,6 +59,7 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```
 
 ```{r}
+# Renaming values in a column
 colnames(pe)[colnames(pe) == 1] = '100000'
 colnames(pe)[colnames(pe) == 2] = '250000'
 colnames(pe)[colnames(pe) == 3] = '500000'
@@ -62,6 +68,7 @@ colnames(pe)[colnames(pe) == 5] = '1000000'
 ```
 
 ```{r}
+# Formatting the dataframe
 pe <- pe |> 
   pivot_longer(cols = c('100000','250000','500000','750000','1000000'), 
                names_to = "number_of_employees",
@@ -73,6 +80,7 @@ pe$number_of_employees <- as.factor(pe$number_of_employees)
 ```{r}
 #| message: false
 #| warning: false
+# Plotting the dataframe
 pe |>
   ggplot(aes(market_value, fill = number_of_employees)) +
   geom_histogram(aes(y = after_stat(count/sum(count))),
@@ -92,6 +100,7 @@ pe |>
 ```
 
 ```{r}
+# Creating obs
 newobs = tibble(year = 2023, 
                 revenue_mil = c(100000,200000,300000,400000,500000),
                 profit_mil = 3500,
@@ -103,6 +112,7 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```
 
 ```{r}
+# Renaming values in a column
 colnames(pe)[colnames(pe) == 1] = '100000'
 colnames(pe)[colnames(pe) == 2] = '200000'
 colnames(pe)[colnames(pe) == 3] = '300000'
@@ -111,6 +121,7 @@ colnames(pe)[colnames(pe) == 5] = '500000'
 ```
 
 ```{r}
+# Formatting the dataframe
 pe <- pe |> 
   pivot_longer(cols = c('100000','200000','300000','400000','500000'), 
                names_to = "revenue_m",
@@ -122,6 +133,7 @@ pe$revenue_m <- as.factor(pe$revenue_m)
 ```{r}
 #| message: false
 #| warning: false
+# Plotting the dataframe
 pe |>
   ggplot(aes(market_value, fill = revenue_m)) +
   geom_histogram(aes(y = after_stat(count/sum(count))),
@@ -141,6 +153,7 @@ pe |>
 ```
 
 ```{r}
+# Creating obs
 newobs = tibble(year = 2023, 
                 revenue_mil = 35000,
                 profit_mil = c(2500,5000,10000,25000,50000),
@@ -152,6 +165,7 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```
 
 ```{r}
+# Renaming values in a column
 colnames(pe)[colnames(pe) == 1] = '2500'
 colnames(pe)[colnames(pe) == 2] = '5000'
 colnames(pe)[colnames(pe) == 3] = '10000'
@@ -160,6 +174,7 @@ colnames(pe)[colnames(pe) == 5] = '50000'
 ```
 
 ```{r}
+# Formatting the dataframe
 pe <- pe |> 
   pivot_longer(cols = c('2500','5000','10000','25000','50000'), 
                names_to = "profit_m",
@@ -171,6 +186,7 @@ pe$profit_m <- as.factor(pe$profit_m)
 ```{r}
 #| message: false
 #| warning: false
+# Plotting the dataframe
 pe |>
   ggplot(aes(market_value, fill = profit_m)) +
   geom_histogram(aes(y = after_stat(count/sum(count))),
@@ -190,6 +206,7 @@ pe |>
 ```
 
 ```{r}
+# Creating obs
 newobs = tibble(year = 2023, 
                 revenue_mil = 35000,
                 profit_mil = 3500,
@@ -201,6 +218,7 @@ pe <- posterior_epred(fit_obj, newdata = newobs) |>
 ```
 
 ```{r}
+# Renaming values in a column
 colnames(pe)[colnames(pe) == 1] = '25000'
 colnames(pe)[colnames(pe) == 2] = '50000'
 colnames(pe)[colnames(pe) == 3] = '100000'
@@ -209,6 +227,7 @@ colnames(pe)[colnames(pe) == 5] = '500000'
 ```
 
 ```{r}
+# Formatting the dataframe
 pe <- pe |> 
   pivot_longer(cols = c('25000','50000','100000','250000','500000'), 
                names_to = "asset_m",
@@ -220,6 +239,7 @@ pe$asset_m <- as.factor(pe$asset_m)
 ```{r}
 #| message: false
 #| warning: false
+# Plotting the dataframe
 pe |>
   ggplot(aes(market_value, fill = asset_m)) +
   geom_histogram(aes(y = after_stat(count/sum(count))),

@@ -7,17 +7,20 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading libaries
 library(tidyverse)
 library(readr)
 library(forcats)
 ```
 
 ```{r}
+# Reading data
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(rank,name,headquarters_state,headquarters_city)
 ```
 
 ```{r}
+# Creating a dataframe
 state_hq <- fortune |>
   select(name, headquarters_state) |>
   unique() |>
@@ -28,6 +31,7 @@ state_hq <- fortune |>
 ```
 
 ```{r}
+# Creating another dataframe
 city_hq <- fortune |>
   select(name, headquarters_city) |>
   unique() |>
@@ -39,6 +43,7 @@ city_hq <- fortune |>
 ```
 
 ```{r}
+# Plotting state_hq dataframe
 state_hq |>
   ggplot(aes(x = headquarters_state, y = n)) +
   geom_bar(stat = 'identity', fill = '#0080ff') +
@@ -52,6 +57,7 @@ state_hq |>
 ```
 
 ```{r}
+# Plotting city_hq dataframe
 city_hq |>
   ggplot(aes(x = headquarters_city, y = n)) +
   geom_bar(stat = 'identity', fill = '#0080ff') +

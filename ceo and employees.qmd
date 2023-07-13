@@ -7,6 +7,7 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading Libraries
 library(tidyverse)
 library(dplyr)
 library(readr)
@@ -14,17 +15,20 @@ library(forcats)
 ```
 
 ```{r}
+# Reading in data
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(rank, year, founder_is_ceo, female_ceo, employees)
 ```
 
 ```{r}
+# Creating a dataframe with mean # of employees
 employees <- fortune |>
   summarize(mean_employees = mean(employees, na.rm = TRUE), .by = year) |>
   filter(year >= 2015)
 ```
 
 ```{r}
+# Creating another dataframe with mean percent
 founder_is_ceo <- fortune |>
   select(year, founder_is_ceo) |>
   drop_na() |>
@@ -35,6 +39,7 @@ founder_is_ceo <- fortune |>
 ```
 
 ```{r}
+# Final dataframe with mean percent
 female_ceo <- fortune |>
   select(year, female_ceo) |>
   drop_na() |>
@@ -45,6 +50,7 @@ female_ceo <- fortune |>
 ```
 
 ```{r}
+# Graphing employees dataframe
 employees |>
   ggplot(aes(x = year, y = mean_employees)) +
   geom_point(color = '#0080ff') +
@@ -63,6 +69,7 @@ employees |>
 ```
 
 ```{r}
+# Graphing founder_is_ceo dataframe
 founder_is_ceo |>
   ggplot(aes(x = .by, y = n)) +
   geom_point(color = '#0080ff') +
@@ -81,6 +88,7 @@ founder_is_ceo |>
 ```
 
 ```{r}
+# Graphing female_ceo dataframe
 female_ceo |>
   ggplot(aes(x = .by, y = n)) +
   geom_point(color = '#0080ff') +

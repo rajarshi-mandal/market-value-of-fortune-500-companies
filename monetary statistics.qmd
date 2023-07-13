@@ -7,6 +7,7 @@ execute:
 ```{r}
 #| message: false
 #| warning: false
+# Loading libraries
 library(tidyverse)
 library(dplyr)
 library(readr)
@@ -14,11 +15,13 @@ library(forcats)
 ```
 
 ```{r}
+# Loading data
 fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
   select(rank, year, revenue_mil, profit_mil, asset_mil, market_value_mil)
 ```
 
 ```{r}
+# Creating a dataframe
 market_value <- fortune |>
   filter(year >= 2013) |>
   summarize(mean_market_value_mil = mean(market_value_mil, na.rm = TRUE), .by = year)
@@ -26,18 +29,21 @@ market_value$mean_market_value_mil[market_value$year == 2013] <- 34459.82 - (373
 ```
 
 ```{r}
+# Creating the second dataframe
 revenue <- fortune |>
   summarize(mean_revenue_mil = mean(revenue_mil, na.rm = TRUE), .by = year)
 revenue$mean_revenue_mil[revenue$year == 2013] <- mean(c(23529.903, 24421.006))
 ```
 
 ```{r}
+# Creating the third dataframe
 profit <- fortune |>
   filter(year >= 2013) |>
   summarize(mean_profit_mil = mean(profit_mil, na.rm = TRUE), .by = year)
 ```
 
 ```{r}
+# Creating the final dataframe
 asset <- fortune |>
   filter(year >= 2013) |>
   summarize(mean_asset_mil = mean(asset_mil, na.rm = TRUE), .by = year)
@@ -45,6 +51,7 @@ asset$mean_asset_mil[asset$year == 2013] <- 74061.85 - (76292.42 - 74061.85)/2
 ```
 
 ```{r}
+# Plotting the first dataframe
 market_value |>
   ggplot(aes(x = year, y = mean_market_value_mil)) +
   geom_point(color = '#0080ff') +
@@ -63,6 +70,7 @@ market_value |>
 ```
 
 ```{r}
+# Plotting the second dataframe
 revenue |>
   ggplot(aes(x = year, y = mean_revenue_mil)) +
   geom_point(color = '#0080ff') +
@@ -81,6 +89,7 @@ revenue |>
 ```
 
 ```{r}
+# Plotting the third dataframe
 profit |>
   ggplot(aes(x = year, y = mean_profit_mil)) +
   geom_point(color = '#0080ff') +
@@ -99,6 +108,7 @@ profit |>
 ```
 
 ```{r}
+# Plotting the fourth dataframe
 asset |>
   ggplot(aes(x = year, y = mean_asset_mil)) +
   geom_point(color = '#0080ff') +
