@@ -54,7 +54,7 @@ business_ind |>
   geom_bar(stat = 'identity', fill = '#0080ff') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Industries of Fortune 500 Companies",
-       subtitle = "Gas and electric ultities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
+       subtitle = "Gas and electric utilities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
        x = 'Industry',
        y = 'Count',
        caption = 'fortune.com') +

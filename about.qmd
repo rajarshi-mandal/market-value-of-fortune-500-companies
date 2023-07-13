@@ -3,9 +3,10 @@ title: "About"
 sidebar: false
 ---
 
-## About this Project
+## About this project
 
 This website was created as my final project for [Kane’s Free Data Science Course](https://bootcamp.davidkane.info/). I loved this course and would recommend it to anybody that wants to learn about Data Science!
 
 ## About Me
+
 My name is Rajarshi Mandal, and I am a student at William Diamond Middle School. The code for this project can be found at [my Github account](https://github.com/rajarshi-mandal).

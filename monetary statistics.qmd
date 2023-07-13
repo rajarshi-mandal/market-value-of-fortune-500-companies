@@ -1,5 +1,5 @@
 ---
-title: "Revenue, Market Value, Profit, and Assets"
+title: "Market Value, Revenue, Profit, and Assets"
 execute: 
   echo: false
 ---
