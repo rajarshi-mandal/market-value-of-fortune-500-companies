@@ -18,7 +18,9 @@ fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
 ```
 
 ```{r}
-state_hq <- unique(fortune) |>
+state_hq <- fortune |>
+  select(name, headquarters_state) |>
+  unique() |>
   select(headquarters_state) |>
   drop_na() |>
   count(headquarters_state) |>
@@ -26,11 +28,13 @@ state_hq <- unique(fortune) |>
 ```
 
 ```{r}
-city_hq <- unique(fortune) |>
+city_hq <- fortune |>
+  select(name, headquarters_city) |>
+  unique() |>
   select(headquarters_city) |>
   drop_na() |>
   count(headquarters_city) |>
-  filter(n > 50) |>
+  filter(n > 10) |>
   mutate(headquarters_city = fct_reorder(headquarters_city, desc(n)))
 ```
 
@@ -40,7 +44,7 @@ state_hq |>
   geom_bar(stat = 'identity', fill = '#0080ff') +
   scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(title = "Location of Fortune 500 Companies' Headquarters",
-       subtitle = "New York, California, Texas, Illinois, Ohio, and Pensylvania are the most common states.",
+       subtitle = "New York, California, Texas, and Illinois are the most common states.",
        x = 'Headquarter State Abbreviation',
        y = 'Count',
        caption = 'fortune.com') +
@@ -53,7 +57,7 @@ city_hq |>
   geom_bar(stat = 'identity', fill = '#0080ff') +
   scale_x_discrete(guide = guide_axis(angle = 90)) +
   labs(title = "Location of Fortune 500 Companies' Headquarters",
-       subtitle = "New York City, Houston, Atlanta, Chicago, and Dallas are the most common cities.",
+       subtitle = "New York City, Houston, Atlanta, Dallas, and Chicago are the most common cities.",
        x = 'Headquarter City',
        y = 'Count',
        caption = 'fortune.com') +

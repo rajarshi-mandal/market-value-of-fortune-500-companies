@@ -18,7 +18,9 @@ fortune <- read_csv('data/Cleaned Data.csv', show_col_types = FALSE) |>
 ```
 
 ```{r}
-business_sect <- unique(fortune) |>
+business_sect <- fortune |>
+  select(name, sector) |>
+  unique() |>
   select(sector) |>
   drop_na() |>
   count(sector) |>
@@ -26,11 +28,13 @@ business_sect <- unique(fortune) |>
 ```
 
 ```{r}
-business_ind <- unique(fortune) |>
+business_ind <- fortune |>
+  select(name, industry) |>
+  unique() |>
   select(industry) |>
   drop_na() |>
   count(industry) |>
-  filter(n > 210) |>
+  filter(n > 45) |>
   mutate(industry = fct_reorder(industry, n, .desc = FALSE))
 ```
 
@@ -40,7 +44,7 @@ business_sect |>
   geom_bar(stat = 'identity', fill = '#0080ff') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Business Sectors of Fortune 500 Companies",
-       subtitle = "Financials, energy, retailing, technology, and health care are the most\ncommon sectors.",
+       subtitle = "Financials, energy, technology, retailing, and health care are the most\ncommon sectors.",
        x = 'Sector',
        y = 'Count',
        caption = 'fortune.com') +
@@ -54,7 +58,7 @@ business_ind |>
   geom_bar(stat = 'identity', fill = '#0080ff') +
   theme(axis.text.y = element_text(angle = 0)) +
   labs(title = "Industries of Fortune 500 Companies",
-       subtitle = "Gas and electric utilities, commercial banks, property and casualty\ninsurance, and chemicals are the most common industries.",
+       subtitle = "Gas and electric utilities, commercial banks, specialty retailers, and\nproperty and casualty insurance are the most common industries.",
        x = 'Industry',
        y = 'Count',
        caption = 'fortune.com') +
